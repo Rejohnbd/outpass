@@ -1,49 +1,17 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
 
-@section('title', 'Dashboard')
-
-@section('content')
-<div class="main-container container-fluid">
-    <div class="inner-body">
-
-        <!-- Page Header -->
-        <div class="page-header">
-            <div>
-                <h2 class="main-content-title tx-24 mg-b-5">Empty Page</h2>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:;">Pages</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Empty Page</li>
-                </ol>
-            </div>
-            <div class="d-flex">
-                <div class="justify-content-center">
-                    <button type="button" class="btn btn-white btn-icon-text my-2 me-2">
-                        <i class="fe fe-settings"></i>
-                        <span>Settings</span>
-                    </button>
-                    <button type="button" class="btn btn-primary my-2 btn-icon-text">
-                        <i class="fe fe-download-cloud bg-white-transparent text-white"></i>
-                        <span>Reports</span>
-                    </button>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    You're logged in!
                 </div>
             </div>
         </div>
-        <!-- End Page Header -->
-
-        <!-- Row -->
-        <div class="row row-sm">
-            <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
-                <div class="card custom-card">
-                    <div class="card-body">
-                        <div>
-                            <h6 class="font-weight-normal mb-0">Type text here.....</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Row -->
-
     </div>
-</div>
-@endsection
+</x-app-layout>

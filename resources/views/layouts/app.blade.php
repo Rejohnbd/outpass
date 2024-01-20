@@ -34,7 +34,6 @@
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap-show-password.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/sidemenu/sidemenu.js') }}"></script>
     <script src="{{ asset('assets/plugins/sidebar/sidebar.js') }}"></script>
     <script src="{{ asset('assets/js/themeColors.js') }}"></script>
     <script src="{{ asset('assets/js/sticky.js') }}"></script>
