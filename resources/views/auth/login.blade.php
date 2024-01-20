@@ -3,7 +3,6 @@
 @section('title', 'Login')
 
 @section('content')
-
 <div class="row signpages text-center">
     <div class="col-md-12">
         <div class="card border-0">
@@ -26,14 +25,14 @@
                                             <div class="tab-pane active" id="tab01">
                                                 <div class="form-group text-start">
                                                     <label class="tx-medium">Email</label>
-                                                    <input class="form-control" placeholder="Enter your email" type="email" name="email" autocomplete="email">
+                                                    <input class="form-control" placeholder="Enter your email" type="email" name="email" autocomplete="email" value="{{ old('email') }}" required>
                                                     @error('email')
                                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group text-start">
                                                     <label class="tx-medium">Password</label>
-                                                    <input class="form-control border-end-0" placeholder="Enter your password" type="password" name="password" autocomplete="new-password" data-bs-toggle="password">
+                                                    <input class="form-control border-end-0" placeholder="Enter your password" type="password" name="password" autocomplete="new-password" data-bs-toggle="password" required>
                                                     @error('password')
                                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                                     @enderror
@@ -45,7 +44,7 @@
                                 </form>
                                 <div class="text-start mt-4 ms-0 mb-3">
                                     <div class="mb-1"><a href="forgot.html">Forgot password?</a></div>
-                                    <div>Don't have an account? <a href="signup.html">Register Here</a></div>
+                                    <div>Don't have an account? <a href="{{ route('register') }}">Register Here</a></div>
                                 </div>
                             </div>
                         </div>
@@ -64,44 +63,4 @@
         </div>
     </div>
 </div>
-
-
-
-{{-- <form method="POST" action="{{ route('login') }}">
-@csrf
-
-<!-- Email Address -->
-<div>
-    <x-label for="email" :value="__('Email')" />
-
-    <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-</div>
-
-<!-- Password -->
-<div class="mt-4">
-    <x-label for="password" :value="__('Password')" />
-
-    <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-</div>
-
-<!-- Remember Me -->
-<div class="block mt-4">
-    <label for="remember_me" class="inline-flex items-center">
-        <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-        <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-    </label>
-</div>
-
-<div class="flex items-center justify-end mt-4">
-    @if (Route::has('password.request'))
-    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-        {{ __('Forgot your password?') }}
-    </a>
-    @endif
-
-    <x-button class="ml-3">
-        {{ __('Log in') }}
-    </x-button>
-</div>
-</form> --}}
 @endsection
