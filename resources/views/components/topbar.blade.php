@@ -95,8 +95,8 @@
                             </a>
                             <div class="dropdown-menu">
                                 <div class="header-navheading">
-                                    <h6 class="main-notification-title">Dennis Mark</h6>
-                                    <p class="main-notification-text">Web Designer</p>
+                                    <h6 class="main-notification-title">{{ auth()->user()->name }}</h6>
+                                    <p class="main-notification-text">{{ auth()->user()->email }}</p>
                                 </div>
                                 <a class="dropdown-item border-top" href="profile.html">
                                     <i class="fe fe-user"></i> My Profile

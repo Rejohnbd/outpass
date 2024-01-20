@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Client\ClientDashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +19,12 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+});
+
+Route::middleware(['auth', 'client'])->group(function () {
+    Route::get('dashboard', [ClientDashboardController::class, 'index'])->name('dashboard');
 });
 
 
