@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('assets/img/brand/favicon.ico') }}" type="image/x-icon" />
     <title>{{ config('app.name', 'Laravel') }} :: @yield('title')</title>
-
     <link id="style" rel="stylesheet" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/web-fonts/icons.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/web-fonts/font-awesome/font-awesome.min.css') }}">
