@@ -58,7 +58,7 @@ class ClientOutpassController extends Controller
 
         if ($checkOutpassInfo) {
             $value = ((int) str_replace("OBH", "", $checkOutpassInfo->outpass_id)) + 1;
-            $outpass_id = 'OBH1' . $value;
+            $outpass_id = 'OBH' . $value;
         } else {
             $outpass_id = 'OBH1000';
         }
