@@ -57,9 +57,9 @@
                                             <span class="badge bg-danger">No</span>
                                             @endif
                                         </td>
-                                        <td>{{ date('d-M-Y hh:ii', strtotime($item->start_date_time)) }}</td>
-                                        <td>{{ date('d-M-Y hh:ii', strtotime($item->end_date_time)) }}</td>
-                                        <td></td>
+                                        <td>{{ date('d M Y h:i A', strtotime($item->start_date_time)) }}</td>
+                                        <td>{{ date('d M Y h:i A', strtotime($item->end_date_time)) }}</td>
+                                        <td>{{ $item->duration }}</td>
                                         <td>
                                             @if($item->status == 0)
                                             <span class="badge rounded-pill bg-warning px-2">Pending</span>
@@ -130,9 +130,8 @@
     $(document).ready(function() {
         $('.btnPurpose').on('click', function() {
             let purpose = $(this).attr('data-purpose');
-            console.log(purpose);
             $('#modalPurpose').text(purpose);
-            // $('#outpassPurpose').show();
+            $('#outpassPurpose').modal('show');
         });
     });
 </script>

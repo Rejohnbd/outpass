@@ -91,13 +91,16 @@
 <script src="{{ asset('assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js') }}"></script>
 <script>
     $(document).ready(function() {
+        let currentDateTime = new Date();
         $('#startDateTimePicker').datetimepicker({
             format: 'yyyy-mm-dd hh:ii:ss',
+            startDate: currentDateTime,
             autoclose: true
         });
 
         $('#endDateTimePicker').datetimepicker({
             format: 'yyyy-mm-dd hh:ii:ss',
+            startDate: currentDateTime,
             autoclose: true
         });
     })

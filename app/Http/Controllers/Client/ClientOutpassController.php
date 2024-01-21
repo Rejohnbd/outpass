@@ -40,26 +40,25 @@ class ClientOutpassController extends Controller
     {
         $validate = $request->validate([
             "outpass_type"      => "required|in:0,1",
-            "start_date_time"   => "required",
-            "end_date_time"     => "required",
+            "start_date_time"   => "required|date_format:Y-m-d H:i:s",
+            "end_date_time"     => "required|date_format:Y-m-d H:i:s|after:start_date_time",
             "purpose"           => "required"
         ], [
-            "outpass_type.required"     => "Please Select Outpass Type",
-            "outpass_type.in"           => "Please Select Valid Outpass Type",
-            "start_date_time.required"  => "Start Date Time is Required",
-            "end_date_time.required"    => "End Date Time is Required",
-            "purpose.required"          => "Outpass Purpose is Required"
+            "outpass_type.required"         => "Please Select Outpass Type",
+            "outpass_type.in"               => "Please Select Valid Outpass Type",
+            "start_date_time.required"      => "Start Date Time is Required",
+            "start_date_time.date_format"   => "Start Date Time Format is Invalid",
+            "end_date_time.required"        => "End Date Time is Required",
+            "end_date_time.date_format"     => "Start Date Time Format is Invalid",
+            "end_date_time.after"           => "End Date Time must be after Start Date Time",
+            "purpose.required"              => "Outpass Purpose is Required"
         ]);
 
         $checkOutpassInfo = Outpass::orderBy('id', 'desc')->first('outpass_id');
 
         if ($checkOutpassInfo) {
-
             $value = ((int) str_replace("OBH", "", $checkOutpassInfo->outpass_id)) + 1;
             $outpass_id = 'OBH1' . $value;
-            // dd($outpass_id);
-            // $abc = str_pad($checkOutpassInfo->outpass_id, 3, '1', STR_PAD_LEFT);
-            // dd($abc, $checkOutpassInfo, $request->all());
         } else {
             $outpass_id = 'OBH1000';
         }
