@@ -46,7 +46,17 @@
                                         <label class="tx-medium">Confirm Password <span class="text-danger">*</span></label>
                                         <input class="form-control border-end-0" placeholder="Enter your password" autocomplete="new-password" type="password" data-bs-toggle="password" name="password_confirmation">
                                     </div>
-                                    <button class="btn btn-primary btn-block" type="submit">Create Account</button>
+                                    <div class="form-group text-start">
+                                        <label for="country" class="tx-semibold">Select Floor <span class="text-danger">*</span></label>
+                                        <select class="form-select d-block w-100" required>
+                                            <option value="">Select Floor</option>
+                                            @foreach ($hostelFloors as $floor)
+                                            <option value="{{ $floor->id }}">{{ $floor->floor_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <button class="btn btn-primary btn-block mg-t-10" type="submit">Create Account</button>
                                 </form>
                                 <div class="text-start mt-4 ms-0 mb-3">
                                     <p class="mb-0">Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
