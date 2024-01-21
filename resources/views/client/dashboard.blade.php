@@ -24,7 +24,7 @@
                         <div class="d-flex">
                             <span class="crypto-icon bg-warning-transparent me-3 my-auto"><i class="fas fa-wallet text-primary"></i></span>
                             <div class="">
-                                <h5 class="tx-semibold">2,583.7382 </h5>
+                                <h5 class="tx-semibold">{{ $todayPendingOutpass }} </h5>
                             </div>
                         </div>
                         <a href="" class="btn btn-warning-transparent btn-sm mg-t-5">Details</a>
@@ -40,7 +40,7 @@
                         <div class="d-flex">
                             <span class="crypto-icon bg-success-transparent me-3 my-auto"><i class="fe fe-arrow-down-left text-success"></i></span>
                             <div class="">
-                                <h5 class="tx-semibold">2,583.7382 </h5>
+                                <h5 class="tx-semibold">{{ $todayAcceptedOutpass }} </h5>
                             </div>
                         </div>
                         <a href="" class="btn btn-success-transparent btn-sm mg-t-5">Details</a>
@@ -58,7 +58,7 @@
                                 <i class="fe fe-arrow-up-right text-danger"></i>
                             </span>
                             <div class="">
-                                <h5 class="tx-semibold">2,583.7382 </h5>
+                                <h5 class="tx-semibold">{{ $todayRejectedOutpass }} </h5>
                             </div>
                         </div>
                         <a href="" class="btn btn-danger-transparent btn-sm mg-t-5">Details</a>
