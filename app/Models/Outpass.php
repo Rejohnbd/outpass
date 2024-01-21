@@ -14,6 +14,11 @@ class Outpass extends Model
         'user_id', 'outpass_id', 'outpass_type', 'purpose', 'start_date_time', 'end_date_time', 'parent_permission'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getDurationAttribute()
     {
         $startDate = Carbon::parse(date('Y-m-d H:i:s', strtotime($this->start_date_time)));

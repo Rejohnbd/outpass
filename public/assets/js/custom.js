@@ -325,4 +325,46 @@ $(function () {
             }
         });
     });
+
+    $(document).on("click", ".btnApp", function (e) {
+        e.preventDefault();
+        let form = $(this).parents("form");
+        Swal.fire({
+            title: "Approve Confirmation",
+            text: "Are you sure to Approve?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+            cancelButtonText: "Cancel",
+        }).then((result) => {
+            if (result.value) {
+                form.submit();
+            } else {
+                return false;
+            }
+        });
+    });
+
+    $(document).on("click", ".btnRej", function (e) {
+        e.preventDefault();
+        let form = $(this).parents("form");
+        Swal.fire({
+            title: "Reject Confirmation",
+            text: "Are you sure to Reject?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+            cancelButtonText: "Cancel",
+        }).then((result) => {
+            if (result.value) {
+                form.submit();
+            } else {
+                return false;
+            }
+        });
+    });
 });

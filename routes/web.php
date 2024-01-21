@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminOutpassController;
 use App\Http\Controllers\Client\ClientDashboardController;
 use App\Http\Controllers\Client\ClientOutpassController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+    Route::resource('out-pass', AdminOutpassController::class);
+    Route::put('out-pass-approval/{id}', [AdminOutpassController::class, 'outPassApproval'])->name('out-pass-approval');
+    Route::put('out-pass-reject/{id}', [AdminOutpassController::class, 'outPassReject'])->name('out-pass-reject');
 });
 
 Route::middleware(['auth', 'client'])->group(function () {

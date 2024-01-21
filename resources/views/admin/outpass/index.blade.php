@@ -26,12 +26,16 @@
                                 <thead>
                                     <tr>
                                         <th>Outpass No</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
                                         <th>Outpass Type</th>
                                         <th>Parent Permission</th>
                                         <th>Start Time</th>
                                         <th>End Time</th>
                                         <th>Duration</th>
                                         <th>Approval Status</th>
+                                        <th>Request Time</th>
+                                        <th>Approval Time</th>
                                         <th>Actition</th>
                                     </tr>
                                 </thead>
@@ -39,6 +43,8 @@
                                     @forelse($data as $item)
                                     <tr>
                                         <th scope="row">{{ $item->outpass_id }}</th>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ $item->user->email }}</td>
                                         <td>
                                             @if($item->outpass_type)
                                             <div class="transaction-img rounded-50 border-info bg-info-transparent text-info">
@@ -69,18 +75,24 @@
                                             <span class="badge rounded-pill bg-danger px-2">Rejected</span>
                                             @endif
                                         </td>
+                                        <td>{{ date('d M Y h:i A', strtotime($item->create_at )) }}</td>
+                                        <td>@if(isset($item->approval_date_time)){{ date('d M Y h:i A', strtotime($item->approval_date_time)) }}@endif</td>
                                         <td>
-                                            @if($item->status == 0)
                                             <div class="d-flex">
                                                 <button class="btn ripple btn-secondary btnPurpose mg-r-3" data-purpose="{{ $item->purpose }}"><i class="fe fe-plus"></i></button>
-                                                <a href="{{ route('outpass.edit', $item->id) }}" class="btn ripple btn-primary mg-r-3"><i class="fe fe-edit"></i></a>
-                                                <form action="{{ route('outpass.destroy', $item->id) }}" method="POST">
+                                                @if($item->status == 0)
+                                                <form action="{{ route('out-pass-approval', $item->id) }}" method="POST">
                                                     @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn ripple btn-danger row-delete"><i class="fe fe-trash"></i></button>
+                                                    @method('PUT')
+                                                    <button class="btn ripple btn-success mg-r-3 btnApp"><i class="fa fa-check"></i></button>
                                                 </form>
+                                                <form action="{{ route('out-pass-reject', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button class="btn ripple btn-danger btnRej"><i class="fa fa-close"></i></button>
+                                                </form>
+                                                @endif
                                             </div>
-                                            @endif
                                         </td>
                                     </tr>
                                     @empty
