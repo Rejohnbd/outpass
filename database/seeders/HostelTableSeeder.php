@@ -25,7 +25,7 @@ class HostelTableSeeder extends Seeder
         ]);
 
         Hostel::create([
-            'name'          => 'Nwe New Boy Hostel',
+            'name'          => 'New New Boy Hostel',
             'short_code'    => 'NNBH'
         ]);
     }

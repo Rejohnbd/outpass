@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hostel;
 use App\Models\HostelFloor;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -21,8 +22,8 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        $hostelFloors = HostelFloor::all();
-        return view('auth.register', compact('hostelFloors'));
+        $hostels = Hostel::all();
+        return view('auth.register', compact('hostels'));
     }
 
     /**
@@ -35,12 +36,15 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'hostel_id' => ['required', 'exists:hostels,id'],
         ]);
 
+        dd($request->all());
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

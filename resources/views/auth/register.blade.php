@@ -47,13 +47,16 @@
                                         <input class="form-control border-end-0" placeholder="Enter your password" autocomplete="new-password" type="password" data-bs-toggle="password" name="password_confirmation">
                                     </div>
                                     <div class="form-group text-start">
-                                        <label for="country" class="tx-semibold">Select Floor <span class="text-danger">*</span></label>
-                                        <select class="form-select d-block w-100" required>
-                                            <option value="">Select Floor</option>
-                                            @foreach ($hostelFloors as $floor)
-                                            <option value="{{ $floor->id }}">{{ $floor->floor_name }}</option>
+                                        <label class="tx-semibold">Select Hostel <span class="text-danger">*</span></label>
+                                        <select class="form-select d-block w-100" name="hostel_id" required>
+                                            <option value="">Select Hostel</option>
+                                            @foreach ($hostels as $hostel)
+                                            <option value="{{ $hostel->id }}">{{ $hostel->name }} ({{$hostel->short_code}})</option>
                                             @endforeach
                                         </select>
+                                        @error('hostel_id')
+                                        <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <button class="btn btn-primary btn-block mg-t-10" type="submit">Create Account</button>
