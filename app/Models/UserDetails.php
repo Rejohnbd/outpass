@@ -12,4 +12,10 @@ class UserDetails extends Model
     protected $fillable = [
         'user_id', 'hostel_id'
     ];
+
+
+    public function hostel()
+    {
+        return $this->belongsTo(Hostel::class);
+    }
 }

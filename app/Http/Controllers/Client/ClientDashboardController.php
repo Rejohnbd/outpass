@@ -23,4 +23,16 @@ class ClientDashboardController extends Controller
         $totalRejectedOutpass = $data->where('status', 2)->count();
         return view('client.dashboard', compact('todayPendingOutpass', 'todayAcceptedOutpass', 'todayRejectedOutpass', 'totalOutpass', 'totalAcceptedOutpass', 'totalRejectedOutpass'));
     }
+
+
+    public function additonalInfo()
+    {
+        // $user = Auth::user();
+        // dd($user->userDetails->hostel->floors);
+        // Auth::user()->userDetails->hostel->short_code
+        // $user->load();
+        $hostelShortCode = Auth::user()->userDetails->hostel->short_code;
+        $floors = Auth::user()->userDetails->hostel->floors;
+        return view('client.additonal-info', compact('hostelShortCode', 'floors'));
+    }
 }

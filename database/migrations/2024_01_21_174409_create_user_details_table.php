@@ -26,7 +26,7 @@ class CreateUserDetailsTable extends Migration
             $table->tinyInteger('course')->nullable();
             $table->tinyInteger('year')->nullable();
             $table->string('room_number')->nullable();
-            $table->tinyInteger('profile_status')->default(0);
+            $table->tinyInteger('additional_status')->default(0);
             $table->timestamps();
         });
     }
