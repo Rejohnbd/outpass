@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Hostel;
 use App\Models\HostelFloor;
 use App\Models\User;
+use App\Models\UserDetails;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -44,11 +45,15 @@ class RegisteredUserController extends Controller
             'hostel_id' => ['required', 'exists:hostels,id'],
         ]);
 
-        dd($request->all());
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        UserDetails::create([
+            'user_id'   => $user->id,
+            'hostel_id' => $request->hostel_id
         ]);
 
         event(new Registered($user));
