@@ -62,18 +62,40 @@ class ClientOutpassController extends Controller
         } else {
             $outpass_id = 'OBH1000';
         }
-        Outpass::create([
-            'user_id'           => Auth::user()->id,
-            'outpass_id'        => $outpass_id,
-            'outpass_type'      => $request->outpass_type,
-            'purpose'           => $request->purpose,
-            'start_date_time'   => $request->start_date_time,
-            'end_date_time'     => $request->end_date_time,
-            'parent_permission' => $request->parent_permission == 'on' ? 1 : 0,
-        ]);
 
-        toastr()->addSuccess('Created! Please wait for Approval.');
-        return redirect()->route('outpass.index');
+        $start_date_time = $request->start_date_time;
+        $end_date_time = $request->end_date_time;
+
+        $overlappingRecords = Outpass::where('user_id', Auth::user()->id)
+            ->where(function ($query) use ($start_date_time, $end_date_time) {
+                $query->where(function ($q) use ($start_date_time, $end_date_time) {
+                    $q->where('start_date_time', '<', $end_date_time)
+                        ->where('end_date_time', '>', $start_date_time);
+                })->orWhere(function ($q) use ($start_date_time, $end_date_time) {
+                    $q->where('start_date_time', '>', $start_date_time)
+                        ->where('start_date_time', '<', $end_date_time);
+                });
+            })
+            ->get();
+
+        if ($overlappingRecords->isNotEmpty()) {
+            toastr()->addError('Overlapping records found');
+            return redirect()->back();
+        } else {
+
+            Outpass::create([
+                'user_id'           => Auth::user()->id,
+                'outpass_id'        => $outpass_id,
+                'outpass_type'      => $request->outpass_type,
+                'purpose'           => $request->purpose,
+                'start_date_time'   => $start_date_time,
+                'end_date_time'     => $end_date_time,
+                'parent_permission' => $request->parent_permission == 'on' ? 1 : 0,
+            ]);
+
+            toastr()->addSuccess('Created! Please wait for Approval.');
+            return redirect()->route('outpass.index');
+        }
     }
 
     /**
