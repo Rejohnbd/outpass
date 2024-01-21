@@ -13,7 +13,6 @@ class UserDetails extends Model
         'user_id', 'hostel_id'
     ];
 
-
     public function hostel()
     {
         return $this->belongsTo(Hostel::class);
