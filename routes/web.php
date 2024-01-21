@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Client\ClientDashboardController;
+use App\Http\Controllers\Client\ClientOutpassController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'client'])->group(function () {
     Route::get('dashboard', [ClientDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('outpass', ClientOutpassController::class);
 });
 
 

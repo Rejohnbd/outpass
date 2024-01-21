@@ -22,28 +22,28 @@
                                 <form method="POST" action="{{ route('register') }}">
                                     @csrf
                                     <div class="form-group text-start">
-                                        <label class="tx-medium">Name</label>
+                                        <label class="tx-medium">Name <span class="text-danger">*</span></label>
                                         <input class="form-control" autocomplete="name" name="name" placeholder="Enter your Name" value="{{ old('name') }}" type="text" required>
                                         @error('name')
                                         <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group text-start">
-                                        <label class="tx-medium">Email</label>
+                                        <label class="tx-medium">Email <span class="text-danger">*</span></label>
                                         <input class="form-control" placeholder="Enter your email" type="email" autocomplete="email" value="{{ old('email') }}" name="email" required>
                                         @error('email')
                                         <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group text-start">
-                                        <label class="tx-medium">Password</label>
+                                        <label class="tx-medium">Password <span class="text-danger">*</span></label>
                                         <input class="form-control border-end-0" placeholder="Enter your password" autocomplete="new-password" type="password" data-bs-toggle="password" name="password">
                                         @error('password')
                                         <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group text-start">
-                                        <label class="tx-medium">Confirm Password</label>
+                                        <label class="tx-medium">Confirm Password <span class="text-danger">*</span></label>
                                         <input class="form-control border-end-0" placeholder="Enter your password" autocomplete="new-password" type="password" data-bs-toggle="password" name="password_confirmation">
                                     </div>
                                     <button class="btn btn-primary btn-block" type="submit">Create Account</button>

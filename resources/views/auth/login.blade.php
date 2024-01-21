@@ -24,14 +24,14 @@
                                         <div class="panel-body tabs-menu-body mt-2">
                                             <div class="tab-pane active" id="tab01">
                                                 <div class="form-group text-start">
-                                                    <label class="tx-medium">Email</label>
+                                                    <label class="tx-medium">Email <span class="text-danger">*</span></label>
                                                     <input class="form-control" placeholder="Enter your email" type="email" name="email" autocomplete="email" value="{{ old('email') }}" required>
                                                     @error('email')
                                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group text-start">
-                                                    <label class="tx-medium">Password</label>
+                                                    <label class="tx-medium">Password <span class="text-danger">*</span></label>
                                                     <input class="form-control border-end-0" placeholder="Enter your password" type="password" name="password" autocomplete="new-password" data-bs-toggle="password" required>
                                                     @error('password')
                                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>

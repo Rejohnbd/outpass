@@ -7,16 +7,16 @@
                 </svg>
             </a>
             <div class="hor-logo">
-                <a class="main-logo" href="index.html">
-                    <img src="../assets/img/brand/logo.png" class="header-brand-img desktop-logo" alt="logo">
-                    <img src="../assets/img/brand/logo-light.png" class="header-brand-img desktop-logo-dark" alt="logo">
+                <a class="main-logo" href="@if(auth()->user()->user_type == 'admin'){{ route('admin-dashboard') }}@else{{ route('dashboard') }}@endif">
+                    <img src="{{ asset('assets/img/brand/logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
+                    <img src="{{ asset('assets/img/brand/logo-light.png') }}" class="header-brand-img desktop-logo-dark" alt="logo">
                 </a>
             </div>
         </div>
         <div class="main-header-center">
             <div class="responsive-logo">
-                <a href="index.html"><img src="../assets/img/brand/logo.png" class="mobile-logo" alt="logo"></a>
-                <a href="index.html"><img src="../assets/img/brand/logo-light.png" class="mobile-logo-dark" alt="logo"></a>
+                <a href="@if(auth()->user()->user_type == 'admin'){{ route('admin-dashboard') }}@else{{ route('dashboard') }}@endif"><img src="{{ asset('assets/img/brand/logo.png') }}" class="mobile-logo" alt="logo"></a>
+                <a href="@if(auth()->user()->user_type == 'admin'){{ route('admin-dashboard') }}@else{{ route('dashboard') }}@endif"><img src="{{ asset('assets/img/brand/logo-light.png') }}" class="mobile-logo-dark" alt="logo"></a>
             </div>
         </div>
         <div class="main-header-right">
@@ -42,7 +42,7 @@
                                     </svg>
                                 </span>
                             </a>
-                        </div><!-- Theme-Layout -->
+                        </div>
                         <div class="dropdown d-flex main-header-fullscreen">
                             <a class="nav-link icon full-screen-link" href="javascript:;">
                                 <svg class="header-icons fullscreen-button fullscreen" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24">
@@ -52,8 +52,7 @@
                                     <path d="M7.5,16h-5C2.223877,16,2,16.223877,2,16.5S2.223877,17,2.5,17H7v4.5005493C7.0001831,21.7765503,7.223999,22.0001831,7.5,22h0.0006104C7.7765503,21.9998169,8.0001831,21.776001,8,21.5v-5.0006104C7.9998169,16.2234497,7.776001,15.9998169,7.5,16z M16.5,8h5C21.776123,8,22,7.776123,22,7.5S21.776123,7,21.5,7H17V2.5C17,2.223877,16.776123,2,16.5,2S16,2.223877,16,2.5v5.0006104C16.0001831,7.7765503,16.223999,8.0001831,16.5,8z M7.5,2C7.223877,2,7,2.223877,7,2.5V7H2.5C2.223877,7,2,7.223877,2,7.5S2.223877,8,2.5,8h5.0006104C7.7765503,7.9998169,8.0001831,7.776001,8,7.5v-5C8,2.223877,7.776123,2,7.5,2z M21.5,16h-5.0005493C16.2234497,16.0001831,15.9998169,16.223999,16,16.5v5.0005493C16.0001831,21.7765503,16.223999,22.0001831,16.5,22h0.0006104C16.7765503,21.9998169,17.0001831,21.776001,17,21.5V17h4.5c0.276123,0,0.5-0.223877,0.5-0.5S21.776123,16,21.5,16z" />
                                 </svg>
                             </a>
-                        </div><!-- full screen -->
-
+                        </div>
                         <div class="dropdown d-flex main-header-notification">
                             <a class="nav-link icon" href="javascript:;">
                                 <svg class="header-icons" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24">
@@ -71,7 +70,7 @@
                                 <div class="main-notification-list">
                                     <div class="media new">
                                         <div class="main-img-user online">
-                                            <img alt="avatar" src="../assets/img/users/5.jpg">
+                                            <img alt="avatar" src="{{ asset('assets/img/users/5.jpg') }}">
                                         </div>
                                         <div class="media-body">
                                             <a href="notifications-list.html">
@@ -90,7 +89,7 @@
                         <div class="dropdown d-flex main-profile-menu">
                             <a class="d-flex" href="javascript:;">
                                 <span class="main-img-user">
-                                    <img alt="avatar" src="../assets/img/users/6.jpg">
+                                    <img alt="avatar" src="{{ asset('assets/img/users/6.jpg') }}">
                                 </span>
                             </a>
                             <div class="dropdown-menu">
@@ -98,17 +97,8 @@
                                     <h6 class="main-notification-title">{{ auth()->user()->name }}</h6>
                                     <p class="main-notification-text">{{ auth()->user()->email }}</p>
                                 </div>
-                                <a class="dropdown-item border-top" href="profile.html">
-                                    <i class="fe fe-user"></i> My Profile
-                                </a>
                                 <a class="dropdown-item" href="profile.html">
-                                    <i class="fe fe-edit"></i> Edit Profile
-                                </a>
-                                <a class="dropdown-item" href="profile.html">
-                                    <i class="fe fe-settings"></i> Account Settings
-                                </a>
-                                <a class="dropdown-item" href="profile.html">
-                                    <i class="fe fe-compass"></i> Activity
+                                    <i class="fe fe-settings"></i> Change Password
                                 </a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
