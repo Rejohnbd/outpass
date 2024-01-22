@@ -14,17 +14,11 @@ class ClientDashboardController extends Controller
 {
     public function index()
     {
-        // $todayData = Outpass::where('user_id', Auth::user()->id)->whereDate('created_at', '=', date('Y-m-d'))->get();
-        // $todayPendingOutpass = $todayData->where('status', 0)->count();
-        // $todayAcceptedOutpass = $todayData->where('status', 1)->count();
-        // $todayRejectedOutpass = $todayData->where('status', 2)->count();
-
         $data = Outpass::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
 
         $lastApprovetOutpass = $data->where('status', 1)->pluck('outpass_id')->first();
         $lastRejectedOutpass = $data->where('status', 2)->pluck('outpass_id')->first();
         $lastPendingOutpass = $data->where('status', 0)->pluck('outpass_id')->first();
-        // dd($lastPendingOutpass);
         $totalOutpass = $data->count();
         $totalApprovetOutpass = $data->where('status', 1)->count();
         $totalRejectedOutpass = $data->where('status', 2)->count();
@@ -65,11 +59,7 @@ class ClientDashboardController extends Controller
         } else {
             $shortCode = Auth::user()->userDetails->hostel->short_code;
             $outpass_id = $shortCode . '1000';
-
-            // dd($outpass_id);
         }
-
-        // dd($request->all());
 
         $start_date_time = $request->start_date_time;
         $end_date_time = $request->end_date_time;
