@@ -13,16 +13,92 @@ class ClientDashboardController extends Controller
 {
     public function index()
     {
-        $todayData = Outpass::where('user_id', Auth::user()->id)->whereDate('created_at', '=', date('Y-m-d'))->get();
-        $todayPendingOutpass = $todayData->where('status', 0)->count();
-        $todayAcceptedOutpass = $todayData->where('status', 1)->count();
-        $todayRejectedOutpass = $todayData->where('status', 2)->count();
+        // $todayData = Outpass::where('user_id', Auth::user()->id)->whereDate('created_at', '=', date('Y-m-d'))->get();
+        // $todayPendingOutpass = $todayData->where('status', 0)->count();
+        // $todayAcceptedOutpass = $todayData->where('status', 1)->count();
+        // $todayRejectedOutpass = $todayData->where('status', 2)->count();
 
         $data = Outpass::where('user_id', Auth::user()->id)->get();
         $totalOutpass = $data->count();
-        $totalAcceptedOutpass = $data->where('status', 1)->count();
+        $totalApprovetOutpass = $data->where('status', 1)->count();
         $totalRejectedOutpass = $data->where('status', 2)->count();
-        return view('client.dashboard', compact('todayPendingOutpass', 'todayAcceptedOutpass', 'todayRejectedOutpass', 'totalOutpass', 'totalAcceptedOutpass', 'totalRejectedOutpass'));
+        $totalPendingOutpass = $data->where('status', 0)->count();
+        return view('client.dashboard', compact('totalOutpass', 'totalApprovetOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'data'));
+    }
+
+    public function createOutpass()
+    {
+        return view('client.create-outpass');
+    }
+
+    public function storeOutpass(Request $request)
+    {
+        $validate = $request->validate([
+            'destination'       => 'required',
+            "outpass_type"      => "required|in:0,1",
+            "start_date_time"   => "required|date_format:Y-m-d H:i:s",
+            "end_date_time"     => "required|date_format:Y-m-d H:i:s|after:start_date_time",
+            "purpose"           => "required"
+        ], [
+            "destination.required"          => "Destination is Required",
+            "outpass_type.required"         => "Please Select Outpass Type",
+            "outpass_type.in"               => "Please Select Valid Outpass Type",
+            "start_date_time.required"      => "Start Date Time is Required",
+            "start_date_time.date_format"   => "Start Date Time Format is Invalid",
+            "end_date_time.required"        => "End Date Time is Required",
+            "end_date_time.date_format"     => "Start Date Time Format is Invalid",
+            "end_date_time.after"           => "End Date Time must be after Start Date Time",
+            "purpose.required"              => "Outpass Purpose is Required"
+        ]);
+
+        $checkOutpassInfo = Outpass::orderBy('id', 'desc')->first('outpass_id');
+
+        if ($checkOutpassInfo) {
+            $value = ((int) str_replace(Auth::user()->userDetails->hostel->short_code, "", $checkOutpassInfo->outpass_id)) + 1;
+            $outpass_id = Auth::user()->userDetails->hostel->short_code . $value;
+        } else {
+            $shortCode = Auth::user()->userDetails->hostel->short_code;
+            $outpass_id = $shortCode . '1000';
+
+            // dd($outpass_id);
+        }
+
+        // dd($request->all());
+
+        $start_date_time = $request->start_date_time;
+        $end_date_time = $request->end_date_time;
+
+        $overlappingRecords = Outpass::where('user_id', Auth::user()->id)
+            ->where(function ($query) use ($start_date_time, $end_date_time) {
+                $query->where(function ($q) use ($start_date_time, $end_date_time) {
+                    $q->where('start_date_time', '<', $end_date_time)
+                        ->where('end_date_time', '>', $start_date_time);
+                })->orWhere(function ($q) use ($start_date_time, $end_date_time) {
+                    $q->where('start_date_time', '>', $start_date_time)
+                        ->where('start_date_time', '<', $end_date_time);
+                });
+            })
+            ->get();
+
+        if ($overlappingRecords->isNotEmpty()) {
+            toastr()->addError('Overlapping records found');
+            return redirect()->back();
+        } else {
+
+            Outpass::create([
+                'user_id'           => Auth::user()->id,
+                'destination'       => $request->destination,
+                'outpass_id'        => $outpass_id,
+                'outpass_type'      => $request->outpass_type,
+                'purpose'           => $request->purpose,
+                'start_date_time'   => $start_date_time,
+                'end_date_time'     => $end_date_time,
+                'parent_permission' => $request->parent_permission == 'on' ? 1 : 0,
+            ]);
+
+            toastr()->addSuccess('Created! Please wait for Approval.');
+            return redirect()->route('dashboard');
+        }
     }
 
 

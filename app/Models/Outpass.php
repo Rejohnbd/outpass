@@ -11,7 +11,7 @@ class Outpass extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'outpass_id', 'outpass_type', 'purpose', 'start_date_time', 'end_date_time', 'parent_permission'
+        'user_id', 'outpass_id', 'destination', 'outpass_type', 'purpose', 'start_date_time', 'end_date_time', 'parent_permission'
     ];
 
     public function user()

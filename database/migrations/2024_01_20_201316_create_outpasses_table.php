@@ -17,7 +17,8 @@ class CreateOutpassesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('outpass_id')->unique();
-            $table->tinyInteger('outpass_type')->default(0)->comment('0 = Outpass, 1 = Homepass');
+            $table->tinyInteger('outpass_type')->default(0)->comment('0 = Outpass, 1 = Homepass, 3=Emergency');
+            $table->string('destination');
             $table->string('purpose');
             $table->dateTime('start_date_time');
             $table->dateTime('end_date_time');

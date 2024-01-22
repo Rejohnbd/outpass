@@ -32,7 +32,9 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::get('additonal-info', [ClientDashboardController::class, 'additonalInfo'])->name('additonal-info');
     Route::post('additonal-info', [ClientDashboardController::class, 'additonalInfoSave'])->name('additonal-info');
     Route::get('dashboard', [ClientDashboardController::class, 'index'])->name('dashboard')->middleware('check_addition');
-    Route::resource('outpass', ClientOutpassController::class)->middleware('check_addition');
+    Route::get('request-pass', [ClientDashboardController::class, 'createOutpass'])->name('request-pass')->middleware('check_addition');
+    Route::post('request-pass', [ClientDashboardController::class, 'storeOutpass'])->name('request-pass')->middleware('check_addition');
+    // Route::resource('outpass', ClientOutpassController::class)->middleware('check_addition');
 });
 
 
