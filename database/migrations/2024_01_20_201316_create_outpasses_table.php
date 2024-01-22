@@ -29,6 +29,11 @@ class CreateOutpassesTable extends Migration
             $table->dateTime('approval_date_time')->nullable();
             $table->tinyInteger('notification_status')->default(0)->comment('0 = No, 1 = Admin Seen, 2 = Client Seen');
             $table->unsignedBigInteger('action_id')->nullable();
+            $table->tinyInteger('sure_status')->default(0)->comment('0 = No, 1 = Yes');
+            $table->string('parent_talk')->nullable();
+            $table->string('approval_reason')->nullable();
+            $table->string('teaching_day')->nullable();
+            $table->string('additional_info')->nullable();
             $table->timestamps();
         });
     }

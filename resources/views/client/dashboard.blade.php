@@ -179,9 +179,13 @@
                                             <button type="button" class="btn ripple btn-outline-warning btn-sm">Pending</button>
                                             @endif
                                         </td>
-                                        <td><button type="button" class="btn ripple btn-outline-success btn-sm">Click Here</button></td>
+                                        <td>
+                                            @if($item->status == 1)
+                                            <button type="button" class="btn ripple btn-outline-success btn-sm">Click Here</button>
+                                            @endif
+                                        </td>
                                         <td>@if(!is_null($item->approval_date_time)){{ date('H:i, d M Y', strtotime($item->approval_date_time)) }} @endif</td>
-                                        <td></td>
+                                        <td>{{ isset($item->actionBy) ?? $item->actionBy->name }}</td>
                                         <td>{{ $item->purpose }}</td>
                                     </tr>
                                     @endforeach

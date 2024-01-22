@@ -19,6 +19,11 @@ class Outpass extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function actionBy()
+    {
+        return $this->belongsTo(User::class, 'action_id', 'id');
+    }
+
     public function getDurationAttribute()
     {
         $startDate = Carbon::parse(date('Y-m-d H:i:s', strtotime($this->start_date_time)));
