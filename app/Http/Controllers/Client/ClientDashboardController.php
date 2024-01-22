@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Outpass;
 use App\Models\UserDetails;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,12 +19,17 @@ class ClientDashboardController extends Controller
         // $todayAcceptedOutpass = $todayData->where('status', 1)->count();
         // $todayRejectedOutpass = $todayData->where('status', 2)->count();
 
-        $data = Outpass::where('user_id', Auth::user()->id)->get();
+        $data = Outpass::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+
+        $lastApprovetOutpass = $data->where('status', 1)->pluck('outpass_id')->first();
+        $lastRejectedOutpass = $data->where('status', 2)->pluck('outpass_id')->first();
+        $lastPendingOutpass = $data->where('status', 0)->pluck('outpass_id')->first();
+        // dd($lastPendingOutpass);
         $totalOutpass = $data->count();
         $totalApprovetOutpass = $data->where('status', 1)->count();
         $totalRejectedOutpass = $data->where('status', 2)->count();
         $totalPendingOutpass = $data->where('status', 0)->count();
-        return view('client.dashboard', compact('totalOutpass', 'totalApprovetOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'data'));
+        return view('client.dashboard', compact('totalOutpass', 'totalApprovetOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'lastPendingOutpass', 'lastApprovetOutpass', 'lastRejectedOutpass', 'data'));
     }
 
     public function createOutpass()
@@ -35,8 +41,8 @@ class ClientDashboardController extends Controller
     {
         $validate = $request->validate([
             'destination'       => 'required',
-            "outpass_type"      => "required|in:0,1",
-            "start_date_time"   => "required|date_format:Y-m-d H:i:s",
+            "outpass_type"      => "required|in:0,1,2",
+            "start_date_time"   => "required|date_format:Y-m-d H:i:s|after:" . Carbon::now()->format('Y-m-d H:i:s'),
             "end_date_time"     => "required|date_format:Y-m-d H:i:s|after:start_date_time",
             "purpose"           => "required"
         ], [
@@ -87,13 +93,15 @@ class ClientDashboardController extends Controller
 
             Outpass::create([
                 'user_id'           => Auth::user()->id,
+                'hostel_id'         => Auth::user()->userDetails->hostel_id,
+                'hostel_floor_id'   => Auth::user()->userDetails->hostel_floor_id,
                 'destination'       => $request->destination,
                 'outpass_id'        => $outpass_id,
                 'outpass_type'      => $request->outpass_type,
                 'purpose'           => $request->purpose,
                 'start_date_time'   => $start_date_time,
                 'end_date_time'     => $end_date_time,
-                'parent_permission' => $request->parent_permission == 'on' ? 1 : 0,
+                'parent_permission' => $request->parent_permission,
             ]);
 
             toastr()->addSuccess('Created! Please wait for Approval.');

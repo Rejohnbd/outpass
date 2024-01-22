@@ -59,7 +59,7 @@
                                     <i class="mdi mdi-cube icon-size text-success bg-success-transparent"></i>
                                 </div>
                             </div>
-                            <p class="mb-0 mt-3 text-muted">Last Approved Pass<span class="float-end">OBH8665</span></p>
+                            <p class="mb-0 mt-3 text-muted">Last Approved Pass<span class="float-end">{{ $lastApprovetOutpass }}</span></p>
                         </div>
                         <div class="progress ht-5 mt-1 ">
                             <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress-bar progress-bar-xs ht-5 wd-100p bg-success" role="progressbar">
@@ -81,7 +81,7 @@
                                     <i class="mdi mdi-account-multiple icon-size  text-warning bg-warning-transparent"></i>
                                 </div>
                             </div>
-                            <p class="mb-0 mt-3 text-muted">Last Rejected Pass<span class="float-end">OBH8655</span></p>
+                            <p class="mb-0 mt-3 text-muted">Last Rejected Pass<span class="float-end">{{ $lastRejectedOutpass }}</span></p>
                         </div>
                         <div class="progress ht-5 mt-1 ">
                             <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress-bar progress-bar-xs ht-5 wd-100p bg-warning" role="progressbar">
@@ -103,7 +103,7 @@
                                     <i class="mdi mdi-cart icon-size text-info bg-info-transparent"></i>
                                 </div>
                             </div>
-                            <p class="mb-0 mt-3 text-muted">Pending Pass ID<span class="float-end">OBH8665</span></p>
+                            <p class="mb-0 mt-3 text-muted">Pending Pass ID<span class="float-end">{{ $lastPendingOutpass }}</span></p>
                         </div>
                         <div class="progress ht-5 mt-1 ">
                             <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress-bar progress-bar-xs ht-5 wd-100p bg-info" role="progressbar">
@@ -151,23 +151,38 @@
                                 <tbody>
                                     @foreach($data as $item)
                                     <tr>
-                                        <td>1</td>
-                                        <td>OBH8665</td>
-                                        <td>Homepass</td>
-                                        <td>Yes</td>
-                                        <td>Sonipat</td>
-                                        <td>18:20, 21 Jan 2024</td>
-                                        <td>20:20, 21 Jan 2024</td>
-                                        <td>24:20, 21 Jan 2024</td>
-                                        <td>05 Days</td>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->outpass_id }}</td>
+                                        <td>
+                                            @if($item->outpass_type == 1)
+                                            Homepass
+                                            @elseif($item->outpass_type == 2)
+                                            Emergency
+                                            @else
+                                            Outpass
+                                            @endif
+                                        </td>
+                                        <td>{{ $item->parent_permission == 1 ? 'Yes' : 'No' }}</td>
+                                        <td>{{ $item->destination }}</td>
+                                        <td>{{ date('H:i, d M Y', strtotime($item->created_at))}}</td>
+                                        <td>{{ date('H:i, d M Y', strtotime($item->start_date_time)) }} </td>
+                                        <td>{{ date('H:i, d M Y', strtotime($item->start_date_time)) }}</td>
+                                        <td>{{ $item->duration }}</td>
                                         <td></td>
                                         <td></td>
-                                        <td> <button type="button" class="btn ripple btn-outline-success btn-sm">Approved</button>
+                                        <td>
+                                            @if($item->status == 1)
+                                            <button type="button" class="btn ripple btn-outline-success btn-sm">Approved</button>
+                                            @elseif($item->status == 2)
+                                            <button type="button" class="btn ripple btn-outline-danger btn-sm">Rejected</button>
+                                            @else
+                                            <button type="button" class="btn ripple btn-outline-warning btn-sm">Pending</button>
+                                            @endif
                                         </td>
                                         <td><button type="button" class="btn ripple btn-outline-success btn-sm">Click Here</button></td>
-                                        <td>24:20, 21 Jan 2024</td>
-                                        <td>Ankur Sir</td>
-                                        <td>for chill</td>
+                                        <td>@if(!is_null($item->approval_date_time)){{ date('H:i, d M Y', strtotime($item->approval_date_time)) }} @endif</td>
+                                        <td></td>
+                                        <td>{{ $item->purpose }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

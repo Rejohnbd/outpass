@@ -16,6 +16,8 @@ class CreateOutpassesTable extends Migration
         Schema::create('outpasses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('hostel_id');
+            $table->unsignedBigInteger('hostel_floor_id');
             $table->string('outpass_id')->unique();
             $table->tinyInteger('outpass_type')->default(0)->comment('0 = Outpass, 1 = Homepass, 3=Emergency');
             $table->string('destination');
@@ -26,6 +28,7 @@ class CreateOutpassesTable extends Migration
             $table->tinyInteger('status')->default(0)->comment('0 = Pending, 1 = Approved, 2 = Rejected');
             $table->dateTime('approval_date_time')->nullable();
             $table->tinyInteger('notification_status')->default(0)->comment('0 = No, 1 = Admin Seen, 2 = Client Seen');
+            $table->unsignedBigInteger('action_id');
             $table->timestamps();
         });
     }
