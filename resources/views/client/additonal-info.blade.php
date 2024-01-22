@@ -30,32 +30,33 @@
                         <h6 class="main-content-label">Additional Information</h6>
                     </div>
                     <div class="card-body">
-                        <form class="needs-validation" novalidate="">
+                        <form action="{{ route('additonal-info') }}" method="post">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="rollNo" class="tx-semibold">Roll No.</label>
-                                    <input type="text" class="form-control" id="rollNo" placeholder="Roll No." name="roll_no" value="" required>
+                                    <label for="rollNo" class="tx-semibold">Roll No. <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="rollNo" placeholder="Roll No." name="roll_no" value="{{ old('roll_no') }}" required>
                                     @error('roll_no')
                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="phoneNo" class="tx-semibold">Phone No.</label>
-                                    <input type="text" class="form-control" id="phoneNo" name="phone_no" placeholder="Phone No." value="" required>
+                                    <label for="phoneNo" class="tx-semibold">Phone No. <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="phoneNo" name="phone_no" placeholder="Phone No." value="{{ old('phone_no') }}" required>
                                     @error('phone_no')
                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="gardianName" class="tx-semibold">Guardian Name</label>
-                                    <input type="text" class="form-control" id="gardianName" name="guardian_name" placeholder="Guardian Name" value="" required>
+                                    <label for="gardianName" class="tx-semibold">Guardian Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="gardianName" name="guardian_name" placeholder="Guardian Name" value="{{ old('guardian_name') }}" required>
                                     @error('guardian_name')
                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="gardianPhoneNo" class="tx-semibold">Guardian Mobile No</label>
-                                    <input type="text" class="form-control" id="gardianPhoneNo" placeholder="Guardian Mobile No" name="guardian_phone_no" value="" required>
+                                    <label for="gardianPhoneNo" class="tx-semibold">Guardian Mobile No <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="gardianPhoneNo" placeholder="Guardian Mobile No" name="guardian_phone_no" value="{{ old('guardian_phone_no') }}" required>
                                     @error('guardian_phone_no')
                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                     @enderror
@@ -63,7 +64,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="address" class="tx-semibold">Complete Address <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="Complete Address" required>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Complete Address" required value="{{ old('address') }}">
                                 @error('course')
                                 <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                 @enderror
@@ -71,10 +72,10 @@
                             <div class="row">
                                 <div class="col-md-5 mb-3">
                                     <label for="slectCourse" class="tx-semibold">Course <span class="text-danger">*</span></label>
-                                    <select class="form-select d-block w-100 select2" id="slectCourse" name="course" required="">
+                                    <select class="form-select d-block w-100 select2" id="slectCourse" name="course" required>
                                         <option value="">Choose Course</option>
-                                        <option>BCA</option>
-                                        <option>MCA</option>
+                                        <option value="bca">BCA</option>
+                                        <option value="mca">MCA</option>
                                     </select>
                                     @error('course')
                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
@@ -95,8 +96,8 @@
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="roomNumber" class="tx-semibold">Room Number <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="roomNumber" placeholder="Room Number" name="roll_no" required>
-                                    @error('roll_no')
+                                    <input type="text" class="form-control" id="roomNumber" placeholder="Room Number" name="room_number" required value="{{ old('room_number') }}">
+                                    @error('room_number')
                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -114,7 +115,7 @@
                                 </div>
                                 <div class="text-wrap">
                                     <div class="btn-list">
-                                        <button type="button" class="btn ripple btn-secondary-transparent btn-block btn-md">Submit Additional Information</button>
+                                        <button type="submit" class="btn ripple btn-secondary-transparent btn-block btn-md">Submit Additional Information</button>
                                     </div>
                                 </div>
                             </div>

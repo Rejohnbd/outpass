@@ -23,7 +23,7 @@ class CreateUserDetailsTable extends Migration
             $table->string('guardian_name')->nullable();
             $table->string('guardian_phone_no')->nullable();
             $table->string('address')->nullable();
-            $table->tinyInteger('course')->nullable();
+            $table->string('course')->nullable();
             $table->tinyInteger('year')->nullable();
             $table->string('room_number')->nullable();
             $table->tinyInteger('additional_status')->default(0);
