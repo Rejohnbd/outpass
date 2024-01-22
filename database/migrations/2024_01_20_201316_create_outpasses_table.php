@@ -28,7 +28,7 @@ class CreateOutpassesTable extends Migration
             $table->tinyInteger('status')->default(0)->comment('0 = Pending, 1 = Approved, 2 = Rejected');
             $table->dateTime('approval_date_time')->nullable();
             $table->tinyInteger('notification_status')->default(0)->comment('0 = No, 1 = Admin Seen, 2 = Client Seen');
-            $table->unsignedBigInteger('action_id');
+            $table->unsignedBigInteger('action_id')->nullable();
             $table->timestamps();
         });
     }
