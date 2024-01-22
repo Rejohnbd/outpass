@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\InchargeController;
 use App\Http\Controllers\Client\ClientDashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
     Route::get('approval-outpass/{id}', [AdminDashboardController::class, 'approvalOutpass'])->name('approval-outpass');
     Route::put('approvaloutpass/{id}', [AdminDashboardController::class, 'outpassApproval'])->name('approvaloutpass');
+    Route::resource('incharges', InchargeController::class);
 });
 
 Route::middleware(['auth', 'client'])->group(function () {
