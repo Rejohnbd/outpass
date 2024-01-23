@@ -223,4 +223,56 @@ class ClientDashboardController extends Controller
         toastr()->addSuccess('Password Updated Successfully');
         return redirect()->route('dashboard');
     }
+
+    public function editProfile()
+    {
+        $hostelShortCode = Auth::user()->userDetails->hostel->short_code;
+        $floors = Auth::user()->userDetails->hostel->floors;
+        $userDetails = Auth::user()->userDetails;
+        return view('client.edit-profile', compact('userDetails', 'hostelShortCode', 'floors'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $floorIds = Auth::user()->userDetails->hostel->floors->pluck('id')->implode(',');
+        $validate = $request->validate([
+            'roll_no'           => 'required',
+            'phone_no'          => 'required',
+            'guardian_name'     => 'required',
+            'guardian_phone_no' => 'required',
+            'address'           => 'required',
+            'course'            => 'required',
+            'year'              => 'required|in:1,2,3,4',
+            'room_number'       => 'required',
+            'hostel_floor_id'   => 'required|in:' . $floorIds,
+
+        ], [
+            'roll_no.required'           => 'Roll No. is required',
+            'phone_no.required'          => 'Phone No. is required',
+            'guardian_name.required'     => 'Guardian Name is required',
+            'guardian_phone_no.required' => 'Guardian Phone No. is required',
+            'address.required'           => 'Address is required',
+            'course.required'            => 'Course is required',
+            'year.required'              => 'Year is required',
+            'year.in'                    => 'Provide Valid Year',
+            'room_number.required'       => 'Room No. is required',
+            'hostel_floor_id.required'   => 'Hostel Floor is required',
+            'hostel_floor_id.in'         => 'Provide Valid Floor',
+        ]);
+
+        $userDetails = UserDetails::where('user_id', Auth::user()->id)->first();
+        $userDetails->roll_no = $request->roll_no;
+        $userDetails->phone_no = $request->phone_no;
+        $userDetails->guardian_name = $request->guardian_name;
+        $userDetails->guardian_phone_no = $request->guardian_phone_no;
+        $userDetails->address = $request->address;
+        $userDetails->course = $request->course;
+        $userDetails->year = $request->year;
+        $userDetails->room_number = $request->room_number;
+        $userDetails->hostel_floor_id = $request->hostel_floor_id;
+        $userDetails->save();
+
+        toastr()->addSuccess('Profile Successfully!');
+        return redirect()->route('dashboard');
+    }
 }

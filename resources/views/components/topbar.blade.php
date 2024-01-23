@@ -83,7 +83,7 @@
                                     <p class="main-notification-text">{{ auth()->user()->email }}</p>
                                 </div>
                                 @if(auth()->user()->user_type == 'client')
-                                <a class="dropdown-item" href="profile.html">
+                                <a class="dropdown-item" href="{{ route('edit-profile') }}">
                                     <i class="fe fe-edit"></i> Edit Profile
                                 </a>
                                 <a class="dropdown-item" href="{{ route('change-password') }}">

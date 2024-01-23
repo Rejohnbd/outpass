@@ -47,6 +47,8 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::post('client-notification-clear', [ClientDashboardController::class, 'clientNotificationClear'])->name('client-notification-clear');
     Route::get('change-password', [ClientDashboardController::class, 'changePassword'])->name('change-password');
     Route::post('update-password', [ClientDashboardController::class, 'updatePassword'])->name('update-password');
+    Route::get('edit-profile', [ClientDashboardController::class, 'editProfile'])->name('edit-profile');
+    Route::post('update-profile', [ClientDashboardController::class, 'updateProfile'])->name('update-profile');
 });
 
 

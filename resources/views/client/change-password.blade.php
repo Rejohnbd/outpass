@@ -49,7 +49,7 @@
                             </div>
                             <div class="text-wrap">
                                 <div class="btn-list">
-                                    <button type="submit" class="btn ripple btn-secondary-transparent btn-block btn-md">Submit Request Pass</button>
+                                    <button type="submit" class="btn ripple btn-secondary-transparent btn-block btn-md">Update Password</button>
                                 </div>
                             </div>
                         </form>
