@@ -43,7 +43,7 @@
                                     </div>
                                 </form>
                                 <div class="text-start mt-4 ms-0 mb-3">
-                                    <div class="mb-1"><a href="forgot.html">Forgot password?</a></div>
+                                    {{-- <div class="mb-1"><a href="forgot.html">Forgot password?</a></div> --}}
                                     <div>Don't have an account? <a href="{{ route('register') }}">Register Here</a></div>
                                 </div>
                             </div>

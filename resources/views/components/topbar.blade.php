@@ -82,7 +82,7 @@
                                     <h6 class="main-notification-title">{{ auth()->user()->name }}</h6>
                                     <p class="main-notification-text">{{ auth()->user()->email }}</p>
                                 </div>
-                                <a class="dropdown-item" href="profile.html">
+                                <a class="dropdown-item" href="{{ route('profile') }}">
                                     <i class="fe fe-settings"></i> Change Password
                                 </a>
                                 <form method="POST" action="{{ route('logout') }}">
