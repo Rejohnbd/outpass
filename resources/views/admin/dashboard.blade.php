@@ -156,7 +156,7 @@
                                         <td>{{ $item->destination }}</td>
                                         <td>{{ date('H:i, d M Y', strtotime($item->created_at))}}</td>
                                         <td>{{ date('H:i, d M Y', strtotime($item->start_date_time)) }} </td>
-                                        <td>{{ date('H:i, d M Y', strtotime($item->start_date_time)) }}</td>
+                                        <td>{{ date('H:i, d M Y', strtotime($item->end_date_time)) }}</td>
                                         <td>
                                             @if($item->status == 1)
                                             <button type="button" class="btn ripple btn-outline-success btn-sm">Approved</button>

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ClientDashboardController extends Controller
 {
@@ -51,36 +52,37 @@ class ClientDashboardController extends Controller
             "purpose.required"              => "Outpass Purpose is Required"
         ]);
 
-        $checkOutpassInfo = Outpass::orderBy('id', 'desc')->first('outpass_id');
-
-        if (!is_null($checkOutpassInfo) && str_contains($checkOutpassInfo->outpass_id, Auth::user()->userDetails->hostel->short_code)) {
-            $value = ((int) str_replace(Auth::user()->userDetails->hostel->short_code, "", $checkOutpassInfo->outpass_id)) + 1;
-            $outpass_id = Auth::user()->userDetails->hostel->short_code . $value;
-        } else {
-            $shortCode = Auth::user()->userDetails->hostel->short_code;
-            $outpass_id = $shortCode . '1000';
-        }
-
+        $outpass_id = $this->generateRandomOutpassId();
         $start_date_time = $request->start_date_time;
         $end_date_time = $request->end_date_time;
 
+        // $overlappingRecords = Outpass::where('user_id', Auth::user()->id)
+        //     ->where(function ($query) use ($start_date_time, $end_date_time) {
+        //         $query->where(function ($q) use ($start_date_time, $end_date_time) {
+        //             $q->where('start_date_time', '<', $end_date_time)
+        //                 ->where('end_date_time', '>', $start_date_time);
+        //         })->orWhere(function ($q) use ($start_date_time, $end_date_time) {
+        //             $q->where('start_date_time', '>', $start_date_time)
+        //                 ->where('start_date_time', '<', $end_date_time);
+        //         });
+        //     })
+        //     ->get();
         $overlappingRecords = Outpass::where('user_id', Auth::user()->id)
             ->where(function ($query) use ($start_date_time, $end_date_time) {
                 $query->where(function ($q) use ($start_date_time, $end_date_time) {
-                    $q->where('start_date_time', '<', $end_date_time)
-                        ->where('end_date_time', '>', $start_date_time);
+                    $q->whereBetween('start_date_time', [$start_date_time, $end_date_time])
+                        ->orWhereBetween('end_date_time', [$start_date_time, $end_date_time]);
                 })->orWhere(function ($q) use ($start_date_time, $end_date_time) {
-                    $q->where('start_date_time', '>', $start_date_time)
-                        ->where('start_date_time', '<', $end_date_time);
+                    $q->where('start_date_time', '<', $start_date_time)
+                        ->where('end_date_time', '>', $end_date_time);
                 });
             })
-            ->get();
+            ->first();
 
-        if ($overlappingRecords->isNotEmpty()) {
+        if ($overlappingRecords) {
             toastr()->addError('Overlapping records found');
             return redirect()->back();
         } else {
-
             Outpass::create([
                 'user_id'           => Auth::user()->id,
                 'hostel_id'         => Auth::user()->userDetails->hostel_id,
@@ -183,5 +185,16 @@ class ClientDashboardController extends Controller
         return response()->json([
             'status' => true,
         ]);
+    }
+
+    public function generateRandomOutpassId()
+    {
+        $outpassId = Auth::user()->userDetails->hostel->short_code . mt_rand(1000, 9999);
+
+        if (Outpass::where('outpass_id', $outpassId)->exists()) {
+            $this->generateRandomOutpassId();
+        } else {
+            return $outpassId;
+        }
     }
 }

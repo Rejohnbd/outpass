@@ -82,9 +82,14 @@
                                     <h6 class="main-notification-title">{{ auth()->user()->name }}</h6>
                                     <p class="main-notification-text">{{ auth()->user()->email }}</p>
                                 </div>
-                                <a class="dropdown-item" href="{{ route('profile') }}">
+                                @if(auth()->user()->user_type == 'client')
+                                <a class="dropdown-item" href="profile.html">
+                                    <i class="fe fe-edit"></i> Edit Profile
+                                </a>
+                                <a class="dropdown-item" href="profile.html">
                                     <i class="fe fe-settings"></i> Change Password
                                 </a>
+                                @endif
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a class="dropdown-item" href="javascript:void(0);" onclick="event.preventDefault(); this.closest('form').submit();">

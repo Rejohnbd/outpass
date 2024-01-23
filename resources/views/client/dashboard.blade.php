@@ -166,7 +166,7 @@
                                         <td>{{ $item->destination }}</td>
                                         <td>{{ date('H:i, d M Y', strtotime($item->created_at))}}</td>
                                         <td>{{ date('H:i, d M Y', strtotime($item->start_date_time)) }} </td>
-                                        <td>{{ date('H:i, d M Y', strtotime($item->start_date_time)) }}</td>
+                                        <td>{{ date('H:i, d M Y', strtotime($item->end_date_time)) }}</td>
                                         <td>{{ $item->duration }}</td>
                                         <td></td>
                                         <td></td>
