@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hostel;
+use App\Models\HostelFloor;
+use App\Models\Incharge;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class InchargeController extends Controller
 {
@@ -15,7 +20,7 @@ class InchargeController extends Controller
      */
     public function index()
     {
-        $data = User::where('user_type', 'incharge')->paginate(10);
+        $data = User::with('incharge')->where('user_type', 'incharge')->paginate(10);
         return view('admin.incharge.index', compact('data'));
     }
 
@@ -26,7 +31,8 @@ class InchargeController extends Controller
      */
     public function create()
     {
-        //
+        $hostels = Hostel::all();
+        return view('admin.incharge.create', compact('hostels'));
     }
 
     /**
@@ -37,7 +43,28 @@ class InchargeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'hostel_id' => ['required', 'exists:hostels,id'],
+        ]);
+
+        $user = User::create([
+            'user_type' => 'incharge',
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        Incharge::create([
+            'user_id'       => $user->id,
+            'hostel_id'     => $request->hostel_id,
+            'hostel_floor_id' => $request->hostel_floor_id
+        ]);
+
+        toastr()->addSuccess('Created Successfully');
+        return redirect()->route('incharges.index');
     }
 
     /**
@@ -83,5 +110,14 @@ class InchargeController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function getFloors(Request $request)
+    {
+        $hostlFloors = HostelFloor::where('hostel_id', $request->hostel_id)->get();
+        return response()->json([
+            'status' => 200,
+            'hostelFloors' => $hostlFloors
+        ]);
     }
 }

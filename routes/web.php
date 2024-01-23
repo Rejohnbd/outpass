@@ -25,6 +25,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('approval-outpass/{id}', [AdminDashboardController::class, 'approvalOutpass'])->name('approval-outpass');
     Route::put('approvaloutpass/{id}', [AdminDashboardController::class, 'outpassApproval'])->name('approvaloutpass');
     Route::resource('incharges', InchargeController::class);
+    Route::post('get-floors', [InchargeController::class, 'getFloors'])->name('get-floors');
 });
 
 Route::middleware(['auth', 'client'])->group(function () {

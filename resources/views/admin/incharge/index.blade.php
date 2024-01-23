@@ -43,10 +43,10 @@
                                     @foreach($data as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->incharge->hostel->name }} ({{$item->incharge->hostel->short_code}})</td>
+                                        <td>{{ $item->incharge->hostelFloor->floor_name }}</td>
                                         <td></td>
                                     </tr>
                                     @endforeach
