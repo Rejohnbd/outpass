@@ -156,4 +156,32 @@ class ClientDashboardController extends Controller
             return redirect()->route('dashboard');
         }
     }
+
+    public function clientNotification()
+    {
+        $notifications = Outpass::where('user_id', auth()->user()->id)->whereIn('status', [1, 2])->where('notification_status', '!=', 2)->get();
+
+        $listNotification = "";
+        foreach ($notifications as $notification) {
+            if ($notification->status == 1) {
+                $status = '<b class="text-success">Approved</b>';
+            } else {
+                $status = '<b class="text-danger">Rejected</b>';
+            }
+            $listNotification .= '<div class="media new clearNotifi" data-id="' . $notification->id . '"><div class="media-body"><p>Dear <strong>' . auth()->user()->name . '</strong> your <strong>' . $notification->outpass_id . '</strong> outpass has been ' . $status . '</p></div></div>';
+        }
+        return response()->json([
+            'status'                => true,
+            'total_notification'    => $notifications->count(),
+            'list_notification'     => $listNotification
+        ]);
+    }
+
+    public function clientNotificationClear(Request $request)
+    {
+        Outpass::where('id', $request->outpass_id)->update(['notification_status' => 2]);
+        return response()->json([
+            'status' => true,
+        ]);
+    }
 }

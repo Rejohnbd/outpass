@@ -27,12 +27,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('approvaloutpass/{id}', [AdminDashboardController::class, 'outpassApproval'])->name('approvaloutpass');
     Route::resource('incharges', InchargeController::class);
     Route::post('get-floors', [InchargeController::class, 'getFloors'])->name('get-floors');
+    Route::get('admin-notification', [AdminDashboardController::class, 'AdminNotification'])->name('admin-notification');
 });
 
 Route::middleware(['auth', 'incharge'])->group(function () {
     Route::get('incharge-dashboard', [InchargeDashboardController::class, 'index'])->name('incharge-dashboard');
     Route::get('approve-outpass/{id}', [InchargeDashboardController::class, 'approvalOutpass'])->name('approve-outpass');
     Route::put('approveoutpass/{id}', [InchargeDashboardController::class, 'outpassApproval'])->name('approveoutpass');
+    Route::get('incharge-notification', [InchargeDashboardController::class, 'inchargeNotification'])->name('incharge-notification');
 });
 
 Route::middleware(['auth', 'client'])->group(function () {
@@ -41,6 +43,8 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::get('dashboard', [ClientDashboardController::class, 'index'])->name('dashboard')->middleware('check_addition');
     Route::get('request-pass', [ClientDashboardController::class, 'createOutpass'])->name('request-pass')->middleware('check_addition');
     Route::post('request-pass', [ClientDashboardController::class, 'storeOutpass'])->name('request-pass')->middleware('check_addition');
+    Route::get('client-notification', [ClientDashboardController::class, 'clientNotification'])->name('client-notification');
+    Route::post('client-notification-clear', [ClientDashboardController::class, 'clientNotificationClear'])->name('client-notification-clear');
 });
 
 

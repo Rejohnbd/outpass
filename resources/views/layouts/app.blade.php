@@ -42,6 +42,97 @@
     <script src="{{ asset('assets/js/swither-styles.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     @stack('scripts')
+
+
+    @if(auth()->user()->user_type == 'admin')
+    <script>
+        function fetchnotification() {
+            $.ajax({
+                url: "{{ route('admin-notification') }}",
+                method: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        $('#notificationCount').html(response.total_notification);
+                        $('#notificationCountBudget').html('Notifications (' + response.total_notification + ')');
+                        $('#notificationList').empty();
+                        $('#notificationList').html(response.list_notification);
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('.reLoad').on('click', function() {
+                window.location.reload();
+            })
+            setInterval(fetchnotification, 1000 * 60 * 0.5);
+        });
+    </script>
+    @endif
+
+    @if(auth()->user()->user_type == 'incharge')
+    <script>
+        function fetchnotification() {
+            $.ajax({
+                url: "{{ route('incharge-notification') }}",
+                method: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        $('#notificationCount').html(response.total_notification);
+                        $('#notificationCountBudget').html('Notifications (' + response.total_notification + ')');
+                        $('#notificationList').empty();
+                        $('#notificationList').html(response.list_notification);
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('.reLoad').on('click', function() {
+                window.location.reload();
+            })
+            setInterval(fetchnotification, 1000 * 60 * 0.5);
+        });
+    </script>
+    @endif
+
+    @if(auth()->user()->user_type == 'client')
+    <script>
+        function fetchnotification() {
+            $.ajax({
+                url: "{{ route('client-notification') }}",
+                method: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        $('#notificationCount').html(response.total_notification);
+                        $('#notificationCountBudget').html('Notifications (' + response.total_notification + ')');
+                        $('#notificationList').empty();
+                        $('#notificationList').html(response.list_notification);
+                    }
+                }
+            });
+        }
+        $(document).ready(function() {
+            $('.clearNotifi').on('click', function() {
+                let outpassId = $(this).data('id');
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('client-notification-clear') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        outpass_id: outpassId
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            fetchnotification();
+                        }
+                    }
+                });
+            });
+            setInterval(fetchnotification, 1000 * 60 * 1);
+        });
+    </script>
+    @endif
 </body>
 
 </html>

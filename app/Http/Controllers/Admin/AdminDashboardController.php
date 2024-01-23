@@ -68,4 +68,18 @@ class AdminDashboardController extends Controller
             return redirect()->route('admin-dashboard');
         }
     }
+
+    public function AdminNotification()
+    {
+        $notifications = Outpass::where('status', 0)->whereDate('created_at', '=', date('Y-m-d'))->get();
+        $listNotification = "";
+        foreach ($notifications as $notification) {
+            $listNotification .= '<div class="media new reLoad"><div class="media-body"><p><strong>' . $notification->user->name . '</strong> requested <strong>' . $notification->outpass_id . '</strong> outpass is <b class="text-warning">Pending</b> status.</p></div></div>';
+        }
+        return response()->json([
+            'status'                => true,
+            'total_notification'    => $notifications->count(),
+            'list_notification'     => $listNotification
+        ]);
+    }
 }
