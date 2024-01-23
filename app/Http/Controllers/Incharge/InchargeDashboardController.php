@@ -21,8 +21,8 @@ class InchargeDashboardController extends Controller
         $totalRejectedOutpass = $data->where('status', 2)->count();
         $totalPendingOutpass = $data->where('status', 0)->count();
 
-        $allOutpass = Outpass::where('hostel_id', Auth::user()->incharge->hostel_id)->where('hostel_floor_id', Auth::user()->incharge->hostel_floor_id)->orderBy('id', 'desc')->paginate(15);
-
+        // $allOutpass = Outpass::where('hostel_id', Auth::user()->incharge->hostel_id)->where('hostel_floor_id', Auth::user()->incharge->hostel_floor_id)->orderBy('id', 'desc')->paginate(15);
+        $allOutpass = $data;
         return view('incharge.dashboard', compact('lastApprovetOutpass', 'lastRejectedOutpass', 'lastPendingOutpass', 'totalOutpass', 'totalAcceptedOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'allOutpass'));
     }
 

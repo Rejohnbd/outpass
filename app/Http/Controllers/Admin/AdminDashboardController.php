@@ -21,7 +21,8 @@ class AdminDashboardController extends Controller
         $totalRejectedOutpass = $data->where('status', 2)->count();
         $totalPendingOutpass = $data->where('status', 0)->count();
 
-        $allOutpass = Outpass::orderBy('id', 'desc')->paginate(15);
+        // $allOutpass = Outpass::orderBy('id', 'desc')->paginate(15);
+        $allOutpass = $data;
 
         return view('admin.dashboard', compact('lastApprovetOutpass', 'lastRejectedOutpass', 'lastPendingOutpass', 'totalOutpass', 'totalAcceptedOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'allOutpass'));
     }
