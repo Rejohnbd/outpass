@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Outpass;
+use App\Models\User;
 use App\Models\UserDetails;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class ClientDashboardController extends Controller
 {
@@ -196,5 +198,29 @@ class ClientDashboardController extends Controller
         } else {
             return $outpassId;
         }
+    }
+
+    public function changePassword()
+    {
+        return view('client.change-password');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => ['required'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        if (!Hash::check($request->old_password, Auth::user()->password)) {
+            toastr()->addError('Old Password is Invalid');
+            return redirect()->back();
+        }
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        toastr()->addSuccess('Password Updated Successfully');
+        return redirect()->route('dashboard');
     }
 }

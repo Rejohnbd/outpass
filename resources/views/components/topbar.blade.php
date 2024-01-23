@@ -86,7 +86,7 @@
                                 <a class="dropdown-item" href="profile.html">
                                     <i class="fe fe-edit"></i> Edit Profile
                                 </a>
-                                <a class="dropdown-item" href="profile.html">
+                                <a class="dropdown-item" href="{{ route('change-password') }}">
                                     <i class="fe fe-settings"></i> Change Password
                                 </a>
                                 @endif
