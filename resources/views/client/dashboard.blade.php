@@ -185,7 +185,7 @@
                                             @endif
                                         </td>
                                         <td>@if(!is_null($item->approval_date_time)){{ date('H:i, d M Y', strtotime($item->approval_date_time)) }} @endif</td>
-                                        <td>{{ isset($item->actionBy) ?? $item->actionBy->name }}</td>
+                                        <td>@if(isset($item->actionBy)){{ $item->actionBy->name }} @endif</td>
                                         <td>{{ $item->purpose }}</td>
                                     </tr>
                                     @endforeach
