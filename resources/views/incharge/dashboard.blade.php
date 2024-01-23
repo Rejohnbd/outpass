@@ -130,6 +130,7 @@
                                         <th class="wd-20p">Student Name</th>
                                         <th class="wd-20p">Student Phn</th>
                                         <th class="wd-25p">Pass Type</th>
+                                        <th class="wd-25p">Hostel</th>
                                         <th class="wd-25p">Room No</th>
                                         <th class="wd-20p">Parent Permission</th>
                                         <th class="wd-15p">Destination</th>
@@ -159,6 +160,7 @@
                                             Outpass
                                             @endif
                                         </td>
+                                        <td>{{ $item->user->userDetails->hostel->short_code }}</td>
                                         <td>{{ $item->user->userDetails->room_number }}</td>
                                         <td>{{ $item->parent_permission == 1 ? 'Yes' : 'No' }}</td>
                                         <td>{{ $item->destination }}</td>

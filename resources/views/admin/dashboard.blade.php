@@ -122,6 +122,7 @@
                                         <th class="wd-20p">Student Name</th>
                                         <th class="wd-20p">Student Phn</th>
                                         <th class="wd-25p">Pass Type</th>
+                                        <th class="wd-25p">Hostel</th>
                                         <th class="wd-25p">Room No</th>
                                         <th class="wd-20p">Parent Permission</th>
                                         <th class="wd-15p">Destination</th>
@@ -133,6 +134,12 @@
                                         <th class="wd-20p">Checkout</th>
                                         <th class="wd-20p">Checkin</th>
                                         <th class="wd-20p">Purpose by Student:</th>
+                                        <th class="wd-20p">Action took by:</th>
+                                        <th class="wd-20p">Sure Status</th>
+                                        <th class="wd-20p">Parent Talk</th>
+                                        <th class="wd-20p">Approval Reason</th>
+                                        <th class="wd-20p">Teaching Day</th>
+                                        <th class="wd-20p">Additional Info</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -151,6 +158,7 @@
                                             Outpass
                                             @endif
                                         </td>
+                                        <td>{{ $item->user->userDetails->hostel->short_code }}</td>
                                         <td>{{ $item->user->userDetails->room_number }}</td>
                                         <td>{{ $item->parent_permission == 1 ? 'Yes' : 'No' }}</td>
                                         <td>{{ $item->destination }}</td>
@@ -163,13 +171,19 @@
                                             @elseif($item->status == 2)
                                             <button type="button" class="btn ripple btn-outline-danger btn-sm">Rejected</button>
                                             @else
-                                            <a href="{{ route('approval-outpass', $item->outpass_id) }}" class="btn ripple btn-outline-warning btn-sm">Pending</a>
-                                            @endif
+                                            <a type="button" class="btn ripple btn-outline-warning btn-sm">Pending</button>
+                                                @endif
                                         </td>
                                         <td>{{ $item->duration }}</td>
                                         <td></td>
                                         <td></td>
                                         <td>{{ $item->purpose }}</td>
+                                        <td>@if(isset($item->actionBy)){{ $item->actionBy->name }} @endif</td>
+                                        <td>{{ $item->sure_status == 1 ? 'Yes' : 'No' }}</td>
+                                        <td>{{ $item->parent_talk }}</td>
+                                        <td>{{ $item->approval_reason }}</td>
+                                        <td>{{ $item->teaching_day }}</td>
+                                        <td>{{ $item->additional_info }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
