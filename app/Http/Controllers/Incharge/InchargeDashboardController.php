@@ -11,7 +11,7 @@ class InchargeDashboardController extends Controller
 {
     public function index()
     {
-        $data = Outpass::where('hostel_id', Auth::user()->incharge->hostel_id)->where('hostel_floor_id', Auth::user()->incharge->hostel_floor_id)->get();
+        $data = Outpass::where('hostel_id', Auth::user()->incharge->hostel_id)->where('hostel_floor_id', Auth::user()->incharge->hostel_floor_id)->orderBy('id', 'desc')->get();
 
         $lastApprovetOutpass = $data->where('status', 1)->pluck('outpass_id')->first();
         $lastRejectedOutpass = $data->where('status', 2)->pluck('outpass_id')->first();

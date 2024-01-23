@@ -11,7 +11,7 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-        $data = Outpass::all();
+        $data = Outpass::orderBy('id', 'desc')->get();
 
         $lastApprovetOutpass = $data->where('status', 1)->pluck('outpass_id')->first();
         $lastRejectedOutpass = $data->where('status', 2)->pluck('outpass_id')->first();
