@@ -84,9 +84,16 @@ class InchargeController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = User::with('incharge')->where('id', $id)->first();
+        if ($user) {
+            $hostels = Hostel::all();
+            return view('admin.incharge.create', compact('user', 'hostels'));
+        } else {
+            toastr()->addError('Incharge Not Found');
+            return redirect()->route('incharges.index');
+        }
     }
 
     /**
@@ -96,9 +103,33 @@ class InchargeController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'hostel_id' => ['required', 'exists:hostels,id'],
+        ]);
+
+        $user = User::with('incharge')->where('id', $id)->first();
+        if ($user) {
+            $user->name = $request->name;
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+            $user->save();
+
+            $user->incharge()->update([
+                'hostel_id' => $request->hostel_id,
+                'hostel_floor_id' => $request->hostel_floor_id
+            ]);
+
+            toastr()->addSuccess('Updated Successfully');
+            return redirect()->route('incharges.index');
+        } else {
+            toastr()->addError('Incharge Not Found');
+            return redirect()->route('incharges.index');
+        }
     }
 
     /**
@@ -107,9 +138,18 @@ class InchargeController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $user = User::with('incharge')->where('id', $id)->first();
+        if ($user) {
+            $user->incharge()->delete();
+            $user->delete();
+            toastr()->addSuccess('Deleted Successfully');
+            return redirect()->route('incharges.index');
+        } else {
+            toastr()->addError('Incharge Not Found');
+            return redirect()->route('incharges.index');
+        }
     }
 
     public function getFloors(Request $request)

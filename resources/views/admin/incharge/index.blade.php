@@ -47,7 +47,16 @@
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->incharge->hostel->name }} ({{$item->incharge->hostel->short_code}})</td>
                                         <td>{{ $item->incharge->hostelFloor->floor_name }}</td>
-                                        <td></td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="{{ route('incharges.edit', $item->id) }}" class="btn btn-sm ripple btn-primary mg-r-3">Edit</a>
+                                                <form action="{{ route('incharges.destroy', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm ripple btn-danger row-delete">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -65,3 +74,11 @@
     </div>
 </div>
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2/sweetalert2.css') }}" />
+@endpush
+
+@push('scripts')
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.js') }}"></script>
+@endpush
