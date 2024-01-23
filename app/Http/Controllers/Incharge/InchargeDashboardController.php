@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Incharge;
 
 use App\Http\Controllers\Controller;
 use App\Models\Outpass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminDashboardController extends Controller
+class InchargeDashboardController extends Controller
 {
     public function index()
     {
-        $data = Outpass::all();
+        $data = Outpass::where('hostel_id', Auth::user()->incharge->hostel_id)->where('hostel_floor_id', Auth::user()->incharge->hostel_floor_id)->get();
 
         $lastApprovetOutpass = $data->where('status', 1)->pluck('outpass_id')->first();
         $lastRejectedOutpass = $data->where('status', 2)->pluck('outpass_id')->first();
@@ -21,25 +21,25 @@ class AdminDashboardController extends Controller
         $totalRejectedOutpass = $data->where('status', 2)->count();
         $totalPendingOutpass = $data->where('status', 0)->count();
 
-        $allOutpass = Outpass::orderBy('id', 'desc')->paginate(15);
+        $allOutpass = Outpass::where('hostel_id', Auth::user()->incharge->hostel_id)->where('hostel_floor_id', Auth::user()->incharge->hostel_floor_id)->orderBy('id', 'desc')->paginate(15);
 
-        return view('admin.dashboard', compact('lastApprovetOutpass', 'lastRejectedOutpass', 'lastPendingOutpass', 'totalOutpass', 'totalAcceptedOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'allOutpass'));
+        return view('incharge.dashboard', compact('lastApprovetOutpass', 'lastRejectedOutpass', 'lastPendingOutpass', 'totalOutpass', 'totalAcceptedOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'allOutpass'));
     }
 
     public function approvalOutpass($id)
     {
-        $outpass = Outpass::where('outpass_id', $id)->where('status', 0)->first();
+        $outpass = Outpass::where('hostel_id', Auth::user()->incharge->hostel_id)->where('hostel_floor_id', Auth::user()->incharge->hostel_floor_id)->where('outpass_id', $id)->where('status', 0)->first();
         if ($outpass) {
-            return view('admin.approval-outpass', compact('outpass'));
+            return view('incharge.approval-outpass', compact('outpass'));
         } else {
-            toastr()->addError('Outpass Status Changes Already');
-            return redirect()->route('admin-dashboard');
+            toastr()->addError('Failed', 'Something went wrong!');
+            return redirect()->route('incharge-dashboard');
         }
     }
 
     public function outpassApproval(Request $request, $id)
     {
-        $outpass = Outpass::where('id', $id)->where('status', 0)->first();
+        $outpass = Outpass::where('hostel_id', Auth::user()->incharge->hostel_id)->where('hostel_floor_id', Auth::user()->incharge->hostel_floor_id)->where('id', $id)->where('status', 0)->first();
         if ($outpass) {
             $validate = $request->validate([
                 "status"        => "required|in:1,2",
@@ -62,10 +62,10 @@ class AdminDashboardController extends Controller
             $outpass->additional_info = $request->additional_info;
             $outpass->save();
             toastr()->addSuccess('Updated Successfully');
-            return redirect()->route('admin-dashboard');
+            return redirect()->route('incharge-dashboard');
         } else {
-            toastr()->addError('Outpass Status Changes Already');
-            return redirect()->route('admin-dashboard');
+            toastr()->addError('Failed', 'Something went wrong!');
+            return redirect()->route('incharge-dashboard');
         }
     }
 }

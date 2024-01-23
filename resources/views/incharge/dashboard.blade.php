@@ -13,6 +13,14 @@
                     <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                 </ol>
             </div>
+            <div class="d-flex">
+                <div class="justify-content-center">
+                    <button type="button" class="btn btn-white btn-icon-text my-2 me-2">
+                        <i class="fe fe-settings"></i>
+                        <span>Hostel & Floor: {{Auth::user()->incharge->hostel->short_code }} - {{ Auth::user()->incharge->hostelFloor->floor_name }}</span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <div class="row row-sm">
@@ -163,7 +171,7 @@
                                             @elseif($item->status == 2)
                                             <button type="button" class="btn ripple btn-outline-danger btn-sm">Rejected</button>
                                             @else
-                                            <a href="{{ route('approval-outpass', $item->outpass_id) }}" class="btn ripple btn-outline-warning btn-sm">Pending</a>
+                                            <a href="{{ route('approve-outpass', $item->outpass_id) }}" class="btn ripple btn-outline-warning btn-sm">Pending</a>
                                             @endif
                                         </td>
                                         <td>{{ $item->duration }}</td>

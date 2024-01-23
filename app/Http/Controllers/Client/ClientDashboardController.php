@@ -53,7 +53,7 @@ class ClientDashboardController extends Controller
 
         $checkOutpassInfo = Outpass::orderBy('id', 'desc')->first('outpass_id');
 
-        if ($checkOutpassInfo) {
+        if (!is_null($checkOutpassInfo) && str_contains($checkOutpassInfo->outpass_id, Auth::user()->userDetails->hostel->short_code)) {
             $value = ((int) str_replace(Auth::user()->userDetails->hostel->short_code, "", $checkOutpassInfo->outpass_id)) + 1;
             $outpass_id = Auth::user()->userDetails->hostel->short_code . $value;
         } else {
