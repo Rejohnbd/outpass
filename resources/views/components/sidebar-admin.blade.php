@@ -19,6 +19,13 @@
                 <span class="sidemenu-label">Incharge</span>
             </a>
         </li>
+
+        <li class="nav-item @if(Request::is('client-list')) active show @endif">
+            <a class="nav-link with-sub" href="{{ route('client-list') }}">
+                <i class="sidemenu-icon menu-icon mdi mdi-account-multiple-outline text-white"></i>
+                <span class="sidemenu-label">Client List</span>
+            </a>
+        </li>
     </ul>
     <div class="slide-right" id="slide-right">
         <svg xmlns="http://www.w3.org/2000/svg" fill="#c9bebe" width="24" height="24" viewBox="0 0 24 24">

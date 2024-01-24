@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hostel;
 use App\Models\Outpass;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,5 +84,36 @@ class AdminDashboardController extends Controller
             'total_notification'    => $notifications->count(),
             'list_notification'     => $listNotification
         ]);
+    }
+
+    public function clientList()
+    {
+        $userList = User::where('user_type', 'client')->withCount([
+            'outpass as total_count',
+            'outpass as pending' => function ($query) {
+                $query->where('status', 0);
+            },
+            'outpass as approved' => function ($query) {
+                $query->where('status', 1);
+            },
+            'outpass as rejected' => function ($query) {
+                $query->where('status', 2);
+            },
+        ])->orderBy('id', 'desc')->get();
+
+        $hostelList = Hostel::withCount([
+            'outpass as total_count',
+            'outpass as pending' => function ($query) {
+                $query->where('status', 0);
+            },
+            'outpass as approved' => function ($query) {
+                $query->where('status', 1);
+            },
+            'outpass as rejected' => function ($query) {
+                $query->where('status', 2);
+            },
+        ])->get();
+
+        return view('admin.client-list', compact('userList', 'hostelList'));
     }
 }

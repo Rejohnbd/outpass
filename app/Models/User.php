@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Incharge::class);
     }
+
+    public function outpass()
+    {
+        return $this->hasMany(Outpass::class);
+    }
 }

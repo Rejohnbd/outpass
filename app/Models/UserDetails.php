@@ -17,4 +17,9 @@ class UserDetails extends Model
     {
         return $this->belongsTo(Hostel::class);
     }
+
+    public function hostelFloor()
+    {
+        return $this->belongsTo(HostelFloor::class);
+    }
 }

@@ -13,4 +13,9 @@ class Hostel extends Model
     {
         return $this->hasMany(HostelFloor::class);
     }
+
+    public function outpass()
+    {
+        return $this->hasMany(Outpass::class);
+    }
 }
