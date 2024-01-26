@@ -88,7 +88,9 @@ class AdminDashboardController extends Controller
 
     public function clientList()
     {
-        $userList = User::where('user_type', 'client')->withCount([
+        $userList = User::whereHas('userDetails', function ($query) {
+            $query->where('additional_status', '1');
+        })->where('user_type', 'client')->withCount([
             'outpass as total_count',
             'outpass as pending' => function ($query) {
                 $query->where('status', 0);
