@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 
 class ClientDashboardController extends Controller
@@ -79,6 +80,7 @@ class ClientDashboardController extends Controller
                         ->where('end_date_time', '>', $end_date_time);
                 });
             })
+            ->where('status', '!=', 2)
             ->first();
 
         if ($overlappingRecords) {
@@ -116,6 +118,7 @@ class ClientDashboardController extends Controller
 
     public function additonalInfoSave(Request $request)
     {
+
         if (Auth::user()->userDetails->additional_status  == 0) {
             $floorIds = Auth::user()->userDetails->hostel->floors->pluck('id')->implode(',');
             $validate = $request->validate([
@@ -128,7 +131,7 @@ class ClientDashboardController extends Controller
                 'year'              => 'required|in:1,2,3,4',
                 'room_number'       => 'required',
                 'hostel_floor_id'   => 'required|in:' . $floorIds,
-
+                // 'picture'           => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ], [
                 'roll_no.required'           => 'Roll No. is required',
                 'phone_no.required'          => 'Phone No. is required',
@@ -141,9 +144,24 @@ class ClientDashboardController extends Controller
                 'room_number.required'       => 'Room No. is required',
                 'hostel_floor_id.required'   => 'Hostel Floor is required',
                 'hostel_floor_id.in'         => 'Provide Valid Floor',
+                'picture.required'           => 'Picture is required',
+                'picture.image'              => 'Provide Valid Picture',
+                'picture.mimes'              => 'Provide Valid Picture',
+                'picture.max'                => 'Provide Size Maximum 2MB',
             ]);
 
+            // dd($request->all(), 'here');
+
             $userDetails = UserDetails::where('user_id', Auth::user()->id)->first();
+
+            $imageName = time() . '_' .  Auth::user()->id . '_' . $request->picture->getClientOriginalName();
+            $imagePath = 'uploads/' . $imageName;
+            $path = Storage::disk('s3')->put($imagePath, file_get_contents($request->picture));
+            $path = Storage::disk('s3')->url($path);
+
+            dd($path, $imagePath, 'here');
+
+
             $userDetails->roll_no = $request->roll_no;
             $userDetails->phone_no = $request->phone_no;
             $userDetails->guardian_name = $request->guardian_name;

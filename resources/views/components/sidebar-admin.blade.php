@@ -19,7 +19,12 @@
                 <span class="sidemenu-label">Incharge</span>
             </a>
         </li>
-
+        <li class="nav-item @if(Request::is('subadmins*')) active show @endif">
+            <a class="nav-link with-sub" href="{{ route('subadmins.index') }}">
+                <i class="sidemenu-icon menu-icon mdi mdi-account-outline text-white"></i>
+                <span class="sidemenu-label">Sub Admin</span>
+            </a>
+        </li>
         <li class="nav-item @if(Request::is('client-list')) active show @endif">
             <a class="nav-link with-sub" href="{{ route('client-list') }}">
                 <i class="sidemenu-icon menu-icon mdi mdi-account-multiple-outline text-white"></i>

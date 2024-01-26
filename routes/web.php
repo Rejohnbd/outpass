@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\InchargeController;
+use App\Http\Controllers\Admin\SubadminController;
 use App\Http\Controllers\Client\ClientDashboardController;
 use App\Http\Controllers\Incharge\InchargeDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
     // Route::get('approval-outpass/{id}', [AdminDashboardController::class, 'approvalOutpass'])->name('approval-outpass');
-    // Route::put('approvaloutpass/{id}', [AdminDashboardController::class, 'outpassApproval'])->name('approvaloutpass');
+    Route::resource('subadmins', SubadminController::class);
     Route::resource('incharges', InchargeController::class);
     Route::get('client-list', [AdminDashboardController::class, 'clientList'])->name('client-list');
     Route::post('get-floors', [InchargeController::class, 'getFloors'])->name('get-floors');

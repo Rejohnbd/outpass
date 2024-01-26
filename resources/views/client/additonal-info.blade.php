@@ -30,7 +30,7 @@
                         <h6 class="main-content-label">Additional Information</h6>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('additonal-info') }}" method="post">
+                        <form action="{{ route('additonal-info') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -112,6 +112,12 @@
                                     @error('hostel_floor_id')
                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                     @enderror
+                                </div>
+                                <div class="col-md-7 mb-3">
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label tx-semibold">Picture <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="file" id="formFile" name="picture">
+                                    </div>
                                 </div>
                                 <div class="text-wrap">
                                     <div class="btn-list">

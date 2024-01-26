@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasOne(Incharge::class);
     }
 
+    public function subadmin()
+    {
+        return $this->hasOne(Subadmin::class);
+    }
+
     public function outpass()
     {
         return $this->hasMany(Outpass::class);
