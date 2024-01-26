@@ -2,7 +2,7 @@
      <div class="container">
          <div class="row row-sm">
              <div class="col-md-12">
-                 <span>Copyright © 2022 <a href="javascript:void(0);">Dashplex</a>. Designed with <span class="fa fa-heart text-danger"></span> by <a href="https://www.spruko.com/">Spruko</a> All rights reserved.</span>
+                 <span>Copyright © 2022 <a href="https://piet.co.in"> P.I.E.T.</a> Developed with by. <span class="fa fa-heart text-danger"></span> by <a href="https://www.dultr.com/"> DULTR TECHNOLOGIES</a> All rights reserved.</span>
              </div>
          </div>
      </div>
