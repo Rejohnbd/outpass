@@ -31,11 +31,14 @@
                                         <th class="wd-20p">Email</th>
                                         <th class="wd-20p">Roll No</th>
                                         <th class="wd-20p">Phone No</th>
+                                        <th class="wd-20p">Guardian Name</th>
+                                        <th class="wd-20p">Guardian Phone</th>
                                         <th class="wd-20p">Hostel</th>
                                         <th class="wd-20p">Floor</th>
                                         <th class="wd-20p">Room No</th>
                                         <th class="wd-20p">Course</th>
                                         <th class="wd-20p">Year</th>
+                                        <th class="wd-20p">Address</th>
                                         <th class="wd-20p">Total Outpass</th>
                                         <th class="wd-20p">Pending Outpass</th>
                                         <th class="wd-20p">Accepted Outpass</th>
@@ -50,11 +53,14 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->userDetails->roll_no }}</td>
                                         <td>{{ $user->userDetails->phone_no }}</td>
+                                        <td>{{ $user->userDetails->guardian_name }}</td>
+                                        <td>{{ $user->userDetails->guardian_phone_no }}</td>
                                         <td>{{ $user->userDetails->hostel->name }} ({{$user->userDetails->hostel->short_code}})</td>
                                         <td>{{ $user->userDetails->hostelFloor->floor_name }}</td>
                                         <td>{{ $user->userDetails->room_number }}</td>
                                         <td>{{ strtoupper($user->userDetails->course) }}</td>
                                         <td>{{ $user->userDetails->year }} Year</td>
+                                        <td>{{ $user->userDetails->address }}</td>
                                         <td>{{ $user->total_count }}</td>
                                         <td>{{ $user->pending }}</td>
                                         <td>{{ $user->approved }}</td>
