@@ -117,10 +117,45 @@
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card custom-card">
-                    <div class="card-body">
-                        <div>
-                            <h6 class="main-content-label mb-1">OUTPASS Status</h6>
+                    <div class="card-header">
+                        <h6 class="main-content-label mb-1">OUTPASS Status</h6>
+                        <div class="ms-auto">
+                            <form action="{{ route('report-subadmin') }}" method="post">
+                                @csrf
+                                <div class="form-row">
+                                    <div class="form-group col-md-5 mb-0">
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fe fe-calendar lh--9 op-6"></i>
+                                            </div>
+                                            <input class="form-control fc-datepicker" name="from_date" placeholder="Form Date" type="text" required>
+                                        </div>
+                                        @error('from_date')
+                                        <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-5 mb-0">
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fe fe-calendar lh--9 op-6"></i>
+                                            </div>
+                                            <input class="form-control fc-datepicker" name="to_date" placeholder="To Date" type="text" required>
+                                        </div>
+                                        @error('to_date')
+                                        <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-2 mb-0">
+                                        <button type="submit" class="btn btn-primary btn-sm btn-icon-text">
+                                            <i class="fe fe-download-cloud bg-white-transparent text-white"></i>
+                                            <span>Reports Download</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
+                    </div>
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered text-nowrap border-bottom" id="responsive-datatable">
                                 <thead>
@@ -192,3 +227,21 @@
     </div>
 </div>
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2/sweetalert2.css') }}" />
+@endpush
+
+@push('scripts')
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('.fc-datepicker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+    })
+</script>
+@endpush

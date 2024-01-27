@@ -246,7 +246,6 @@
 </div>
 @endsection
 
-
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2/sweetalert2.css') }}" />
 @endpush
@@ -261,15 +260,6 @@
             showOtherMonths: true,
             selectOtherMonths: true
         });
-        // $("#fromDate").datepicker({
-        //     format: 'yyyy-mm-dd',
-        //     autoclose: true
-        // });
-        // $('#fromDate').datetimepicker({
-        //     format: 'yyyy-mm-dd',
-
-        //     autoclose: true
-        // });
     })
 </script>
 @endpush

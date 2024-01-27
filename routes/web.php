@@ -39,6 +39,7 @@ Route::middleware(['auth', 'subadmin'])->group(function () {
     Route::get('outpass-approval/{id}', [SubadminDashboardController::class, 'approvalOutpass'])->name('outpass-approval');
     Route::put('outpassapproval/{id}', [SubadminDashboardController::class, 'outpassApproval'])->name('outpassapproval');
     Route::get('subadmin-notification', [SubadminDashboardController::class, 'subadminNotification'])->name('subadmin-notification');
+    Route::post('report-subadmin', [SubadminDashboardController::class, 'reportSubadmin'])->name('report-subadmin');
 });
 
 

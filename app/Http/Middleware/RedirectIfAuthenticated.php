@@ -24,7 +24,6 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check() && Auth::user()->user_type == 'admin') {
                 return redirect(RouteServiceProvider::ADMIN_HOME);
             } else if (Auth::guard($guard)->check() && Auth::user()->user_type == 'subadmin') {
-                dd('here');
                 return redirect(RouteServiceProvider::SUBADMIN_HOME);
             } else if (Auth::guard($guard)->check() && Auth::user()->user_type == 'incharge') {
                 return redirect(RouteServiceProvider::INCHARGE_HOME);

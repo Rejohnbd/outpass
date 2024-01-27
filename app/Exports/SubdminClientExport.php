@@ -3,13 +3,11 @@
 namespace App\Exports;
 
 use App\Models\Outpass;
-use Illuminate\Database\Eloquent\Collection;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromQuery;
 
-class AdminClientExport implements FromCollection, WithHeadings
+class SubdminClientExport implements FromCollection, WithHeadings
 {
     use Exportable;
 
@@ -28,6 +26,7 @@ class AdminClientExport implements FromCollection, WithHeadings
     public function collection()
     {
         return Outpass::query()
+            ->where('hostel_id', auth()->user()->subadmin->hostel_id)
             ->whereDate('created_at', '>=', $this->fromDate)
             ->whereDate('created_at', '<=', $this->toDate)
             ->get()
@@ -35,11 +34,11 @@ class AdminClientExport implements FromCollection, WithHeadings
                 if ($outpass->outpass_type == 1) {
                     $outpassType = 'Homepass';
                 } else if ($outpass->outpass_type == 2) {
+
                     $outpassType = 'Emergency';
                 } else {
                     $outpassType = 'Outpass';
                 }
-
                 if ($outpass->status == 1) {
                     $outpassStatus = "Approved";
                 } else if ($outpass->status == 2) {
@@ -47,6 +46,7 @@ class AdminClientExport implements FromCollection, WithHeadings
                 } else {
                     $outpassStatus = "Pending";
                 }
+
                 return [
                     'Pass ID' => $outpass->outpass_id,
                     'Name' => $outpass->user->name,

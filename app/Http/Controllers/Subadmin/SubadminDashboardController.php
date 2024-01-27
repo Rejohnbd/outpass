@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Subadmin;
 
+use App\Exports\SubdminClientExport;
 use App\Http\Controllers\Controller;
 use App\Models\Outpass;
 use Illuminate\Http\Request;
@@ -79,5 +80,21 @@ class SubadminDashboardController extends Controller
             'total_notification'    => $notifications->count(),
             'list_notification'     => $listNotification
         ]);
+    }
+
+    public function reportSubadmin(Request $request)
+    {
+        $validate = $request->validate([
+            "from_date"   => "required|date_format:Y-m-d",
+            "to_date"     => "required|date_format:Y-m-d|after:from_date",
+        ], [
+            "from_date.required"      => "From Date  is Required",
+            "from_date.date_format"   => "From Date Format is Invalid",
+            "to_date.required"        => "End Date is Required",
+            "to_date.date_format"     => "End Date  Format is Invalid",
+            "to_date.after"           => "End Date  must be after From Date",
+        ]);
+
+        return (new SubdminClientExport($request->from_date, $request->to_date))->download('outpass_report.xlsx');
     }
 }
