@@ -83,6 +83,32 @@
     </script>
     @endif
 
+    @if(auth()->user()->user_type == 'subadmin')
+    <script>
+        function fetchnotification() {
+            $.ajax({
+                url: "{{ route('subadmin-notification') }}",
+                method: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        $('#notificationCount').html(response.total_notification);
+                        $('#notificationCountBudget').html('Notifications (' + response.total_notification + ')');
+                        $('#notificationList').empty();
+                        $('#notificationList').html(response.list_notification);
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('.reLoad').on('click', function() {
+                window.location.reload();
+            })
+            setInterval(fetchnotification, 1000 * 60 * 0.5);
+        });
+    </script>
+    @endif
+
     @if(auth()->user()->user_type == 'incharge')
     <script>
         function fetchnotification() {

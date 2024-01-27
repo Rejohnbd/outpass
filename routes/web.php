@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\InchargeController;
 use App\Http\Controllers\Admin\SubadminController;
 use App\Http\Controllers\Client\ClientDashboardController;
 use App\Http\Controllers\Incharge\InchargeDashboardController;
+use App\Http\Controllers\Subadmin\SubadminDashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('get-floors', [InchargeController::class, 'getFloors'])->name('get-floors');
     Route::get('admin-notification', [AdminDashboardController::class, 'AdminNotification'])->name('admin-notification');
 });
+
+Route::middleware(['auth', 'subadmin'])->group(function () {
+    Route::get('admindashboard', [SubadminDashboardController::class, 'index'])->name('admindashboard');
+    Route::get('outpass-approval/{id}', [SubadminDashboardController::class, 'approvalOutpass'])->name('outpass-approval');
+    Route::put('outpassapproval/{id}', [SubadminDashboardController::class, 'outpassApproval'])->name('outpassapproval');
+    Route::get('subadmin-notification', [SubadminDashboardController::class, 'subadminNotification'])->name('subadmin-notification');
+});
+
 
 Route::middleware(['auth', 'incharge'])->group(function () {
     Route::get('incharge-dashboard', [InchargeDashboardController::class, 'index'])->name('incharge-dashboard');
