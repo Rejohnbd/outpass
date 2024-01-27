@@ -25,12 +25,12 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
-    // Route::get('approval-outpass/{id}', [AdminDashboardController::class, 'approvalOutpass'])->name('approval-outpass');
+    Route::get('client-list', [AdminDashboardController::class, 'clientList'])->name('client-list');
+    Route::get('admin-notification', [AdminDashboardController::class, 'AdminNotification'])->name('admin-notification');
+    Route::delete('delete-outpass/{id}', [AdminDashboardController::class, 'deleteOutpass'])->name('delete-outpass');
     Route::resource('subadmins', SubadminController::class);
     Route::resource('incharges', InchargeController::class);
-    Route::get('client-list', [AdminDashboardController::class, 'clientList'])->name('client-list');
     Route::post('get-floors', [InchargeController::class, 'getFloors'])->name('get-floors');
-    Route::get('admin-notification', [AdminDashboardController::class, 'AdminNotification'])->name('admin-notification');
 });
 
 Route::middleware(['auth', 'subadmin'])->group(function () {

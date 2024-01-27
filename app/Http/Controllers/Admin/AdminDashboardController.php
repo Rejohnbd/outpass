@@ -118,4 +118,18 @@ class AdminDashboardController extends Controller
 
         return view('admin.client-list', compact('userList', 'hostelList'));
     }
+
+
+    public function deleteOutpass($id)
+    {
+        $outpass = Outpass::where('status', '!=', 0)->first();
+        if ($outpass) {
+            $outpass->delete();
+            toastr()->addSuccess('Deleted Successfully');
+            return redirect()->route('admin-dashboard');
+        } else {
+            toastr()->addError('Something Happend Wrog. Try Again');
+            return redirect()->route('admin-dashboard');
+        }
+    }
 }

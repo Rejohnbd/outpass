@@ -140,6 +140,7 @@
                                         <th class="wd-20p">Approval Reason</th>
                                         <th class="wd-20p">Teaching Day</th>
                                         <th class="wd-20p">Additional Info</th>
+                                        <th class="wd-20p">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -171,8 +172,8 @@
                                             @elseif($item->status == 2)
                                             <button type="button" class="btn ripple btn-outline-danger btn-sm">Rejected</button>
                                             @else
-                                            <a type="button" class="btn ripple btn-outline-warning btn-sm">Pending</button>
-                                                @endif
+                                            <button type="button" class="btn ripple btn-outline-warning btn-sm">Pending</button>
+                                            @endif
                                         </td>
                                         <td>{{ $item->duration }}</td>
                                         <td></td>
@@ -184,6 +185,15 @@
                                         <td>{{ $item->approval_reason }}</td>
                                         <td>{{ $item->teaching_day }}</td>
                                         <td>{{ $item->additional_info }}</td>
+                                        <td>
+                                            @if($item->status != 0)
+                                            <form action="{{ route('delete-outpass', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn ripple btn-outline-danger btn-sm row-delete">Delete</button>
+                                            </form>
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -201,3 +211,12 @@
 </div>
 </div>
 @endsection
+
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2/sweetalert2.css') }}" />
+@endpush
+
+@push('scripts')
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.js') }}"></script>
+@endpush
