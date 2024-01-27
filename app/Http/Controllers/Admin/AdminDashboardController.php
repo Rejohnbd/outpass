@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AdminClientExport;
+use App\Serialisers\AdminOutpassSerialiser;
 use App\Http\Controllers\Controller;
 use App\Models\Hostel;
 use App\Models\Outpass;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Exporter;
+use Illuminate\Support\Facades\Schema;
+use Maatwebsite\Excel\Excel;
 
 class AdminDashboardController extends Controller
 {
@@ -23,7 +28,6 @@ class AdminDashboardController extends Controller
         $totalRejectedOutpass = $data->where('status', 2)->count();
         $totalPendingOutpass = $data->where('status', 0)->count();
 
-        // $allOutpass = Outpass::orderBy('id', 'desc')->paginate(15);
         $allOutpass = $data;
 
         return view('admin.dashboard', compact('lastApprovetOutpass', 'lastRejectedOutpass', 'lastPendingOutpass', 'totalOutpass', 'totalAcceptedOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'allOutpass'));
@@ -131,5 +135,21 @@ class AdminDashboardController extends Controller
             toastr()->addError('Something Happend Wrog. Try Again');
             return redirect()->route('admin-dashboard');
         }
+    }
+
+    public function reportAdmin(Request $request)
+    {
+        $validate = $request->validate([
+            "from_date"   => "required|date_format:Y-m-d",
+            "to_date"     => "required|date_format:Y-m-d|after:from_date",
+        ], [
+            "from_date.required"      => "From Date  is Required",
+            "from_date.date_format"   => "From Date Format is Invalid",
+            "to_date.required"        => "End Date is Required",
+            "to_date.date_format"     => "End Date  Format is Invalid",
+            "to_date.after"           => "End Date  must be after From Date",
+        ]);
+
+        return (new AdminClientExport($request->from_date, $request->to_date))->download('outpass_report.xlsx');
     }
 }

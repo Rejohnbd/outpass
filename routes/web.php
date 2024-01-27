@@ -28,6 +28,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('client-list', [AdminDashboardController::class, 'clientList'])->name('client-list');
     Route::get('admin-notification', [AdminDashboardController::class, 'AdminNotification'])->name('admin-notification');
     Route::delete('delete-outpass/{id}', [AdminDashboardController::class, 'deleteOutpass'])->name('delete-outpass');
+    Route::post('report-admin', [AdminDashboardController::class, 'reportAdmin'])->name('report-admin');
     Route::resource('subadmins', SubadminController::class);
     Route::resource('incharges', InchargeController::class);
     Route::post('get-floors', [InchargeController::class, 'getFloors'])->name('get-floors');
