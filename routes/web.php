@@ -65,5 +65,8 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::post('update-profile', [ClientDashboardController::class, 'updateProfile'])->name('update-profile');
 });
 
+Route::get('test', function () {
+    return view('web.test');
+});
 
 require __DIR__ . '/auth.php';
