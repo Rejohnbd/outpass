@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class UserDetails extends Model
 {
@@ -21,5 +22,10 @@ class UserDetails extends Model
     public function hostelFloor()
     {
         return $this->belongsTo(HostelFloor::class);
+    }
+
+    public function getAvatar()
+    {
+        return Storage::disk('s3')->url('uploads/' . auth()->user()->userDetails->picture);
     }
 }

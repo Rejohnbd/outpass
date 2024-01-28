@@ -150,17 +150,11 @@ class ClientDashboardController extends Controller
                 'picture.max'                => 'Provide Size Maximum 2MB',
             ]);
 
-            // dd($request->all(), 'here');
-
             $userDetails = UserDetails::where('user_id', Auth::user()->id)->first();
 
             $imageName = time() . '_' .  Auth::user()->id . '_' . $request->picture->getClientOriginalName();
             $imagePath = 'uploads/' . $imageName;
-            $path = Storage::disk('s3')->put($imagePath, file_get_contents($request->picture));
-            $path = Storage::disk('s3')->url($path);
-
-            dd($path, $imagePath, 'here');
-
+            Storage::disk('s3')->put($imagePath, file_get_contents($request->picture));
 
             $userDetails->roll_no = $request->roll_no;
             $userDetails->phone_no = $request->phone_no;
@@ -172,6 +166,7 @@ class ClientDashboardController extends Controller
             $userDetails->room_number = $request->room_number;
             $userDetails->hostel_floor_id = $request->hostel_floor_id;
             $userDetails->additional_status = 1;
+            $userDetails->picture = $imageName;
             $userDetails->save();
 
             toastr()->addSuccess('Added Successfully!');
@@ -292,5 +287,17 @@ class ClientDashboardController extends Controller
 
         toastr()->addSuccess('Profile Successfully!');
         return redirect()->route('dashboard');
+    }
+
+    public function downloadOutpass($id)
+    {
+        $outpass = Outpass::where('outpass_id', $id)->where('user_id', Auth::user()->id)->where('status', 1)->first();
+        if ($outpass) {
+            // dd($outpass);
+            return view('client.download-outpass', compact('outpass'));
+        } else {
+            toastr()->addSuccess('Something Wrong');
+            return redirect()->route('dashboard');
+        }
     }
 }

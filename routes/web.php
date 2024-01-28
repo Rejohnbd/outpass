@@ -58,6 +58,7 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::post('request-pass', [ClientDashboardController::class, 'storeOutpass'])->name('request-pass')->middleware('check_addition');
     Route::get('client-notification', [ClientDashboardController::class, 'clientNotification'])->name('client-notification');
     Route::post('client-notification-clear', [ClientDashboardController::class, 'clientNotificationClear'])->name('client-notification-clear');
+    Route::get('download-outpass/{id}', [ClientDashboardController::class, 'downloadOutpass'])->name('download-outpass');
     Route::get('change-password', [ClientDashboardController::class, 'changePassword'])->name('change-password');
     Route::post('update-password', [ClientDashboardController::class, 'updatePassword'])->name('update-password');
     Route::get('edit-profile', [ClientDashboardController::class, 'editProfile'])->name('edit-profile');

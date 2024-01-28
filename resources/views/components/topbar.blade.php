@@ -72,11 +72,27 @@
                         </div>
 
                         <div class="dropdown d-flex main-profile-menu">
+                            @if(auth()->user()->user_type == 'client')
+                            @if(!is_null(auth()->user()->userDetails->picture))
+                            <a class="d-flex" href="javascript:;">
+                                <span class="main-img-user">
+                                    <img alt="avatar" src="{{auth()->user()->userDetails->getAvatar()}}">
+                                </span>
+                            </a>
+                            @else
                             <a class="d-flex" href="javascript:;">
                                 <span class="main-img-user">
                                     <img alt="avatar" src="{{ asset('assets/img/users/6.jpg') }}">
                                 </span>
                             </a>
+                            @endif
+                            @else
+                            <a class="d-flex" href="javascript:;">
+                                <span class="main-img-user">
+                                    <img alt="avatar" src="{{ asset('assets/img/users/6.jpg') }}">
+                                </span>
+                            </a>
+                            @endif
                             <div class="dropdown-menu">
                                 <div class="header-navheading">
                                     <h6 class="main-notification-title">{{ auth()->user()->name }}</h6>

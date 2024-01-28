@@ -181,7 +181,7 @@
                                         </td>
                                         <td>
                                             @if($item->status == 1)
-                                            <button type="button" class="btn ripple btn-outline-success btn-sm">Click Here</button>
+                                            <a href="{{ route('download-outpass', $item->outpass_id) }}" class="btn ripple btn-outline-success btn-sm">Click Here</a>
                                             @endif
                                         </td>
                                         <td>@if(!is_null($item->approval_date_time)){{ date('H:i, d M Y', strtotime($item->approval_date_time)) }} @endif</td>
