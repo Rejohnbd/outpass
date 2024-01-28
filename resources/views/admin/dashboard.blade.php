@@ -110,41 +110,45 @@
             <div class="col-lg-12">
                 <div class="card custom-card">
                     <div class="card-header">
-                        <h6 class="main-content-label mb-1">OUTPASS Status</h6>
-                        <div class="ms-auto">
-                            <form action="{{ route('report-admin') }}" method="post">
-                                @csrf
-                                <div class="form-row">
-                                    <div class="form-group col-md-5 mb-0">
-                                        <div class="input-group">
-                                            <div class="input-group-text">
-                                                <i class="fe fe-calendar lh--9 op-6"></i>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <h6 class="main-content-label mb-1">OUTPASS Status</h6>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <form action="{{ route('report-admin') }}" method="post">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-5">
+                                            <div class="input-group">
+                                                <div class="input-group-text">
+                                                    <i class="fe fe-calendar lh--9 op-6"></i>
+                                                </div>
+                                                <input class="form-control fc-datepicker" name="from_date" placeholder="Form Date" type="text" required>
                                             </div>
-                                            <input class="form-control fc-datepicker" name="from_date" placeholder="Form Date" type="text" required>
+                                            @error('from_date')
+                                            <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                        @error('from_date')
-                                        <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-md-5 mb-0">
-                                        <div class="input-group">
-                                            <div class="input-group-text">
-                                                <i class="fe fe-calendar lh--9 op-6"></i>
+                                        <div class="col-sm-12 col-md-5">
+                                            <div class="input-group">
+                                                <div class="input-group-text">
+                                                    <i class="fe fe-calendar lh--9 op-6"></i>
+                                                </div>
+                                                <input class="form-control fc-datepicker" name="to_date" placeholder="To Date" type="text" required>
                                             </div>
-                                            <input class="form-control fc-datepicker" name="to_date" placeholder="To Date" type="text" required>
+                                            @error('to_date')
+                                            <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                        @error('to_date')
-                                        <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
-                                        @enderror
+                                        <div class="col-sm-12 col-md-2">
+                                            <button type="submit" class="btn btn-primary btn-block btn-sm btn-icon-text">
+                                                <i class="fe fe-download-cloud bg-white-transparent text-white"></i>
+                                                <span>Reports</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-2 mb-0">
-                                        <button type="submit" class="btn btn-primary btn-sm btn-icon-text">
-                                            <i class="fe fe-download-cloud bg-white-transparent text-white"></i>
-                                            <span>Reports Download</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">

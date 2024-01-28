@@ -28,4 +28,9 @@ class UserDetails extends Model
     {
         return Storage::disk('s3')->url('uploads/' . auth()->user()->userDetails->picture);
     }
+
+    public function getAvaterUrl($imagePatch)
+    {
+        return Storage::disk('s3')->url('uploads/' . $imagePatch);
+    }
 }

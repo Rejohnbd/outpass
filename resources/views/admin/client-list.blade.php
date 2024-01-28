@@ -39,6 +39,7 @@
                                         <th class="wd-20p">Course</th>
                                         <th class="wd-20p">Year</th>
                                         <th class="wd-20p">Address</th>
+                                        <th class="wd-20p">Picture</th>
                                         <th class="wd-20p">Total Outpass</th>
                                         <th class="wd-20p">Pending Outpass</th>
                                         <th class="wd-20p">Accepted Outpass</th>
@@ -61,6 +62,11 @@
                                         <td>{{ strtoupper($user->userDetails->course) }}</td>
                                         <td>{{ $user->userDetails->year }} Year</td>
                                         <td>{{ $user->userDetails->address }}</td>
+                                        <td>
+                                            <div class="avatar avatar-xl showImage" style="cursor: pointer; " data-id="{{ $user->userDetails->getAvaterUrl($user->userDetails->picture) }}">
+                                                <img class="rounded-7" src="{{ $user->userDetails->getAvaterUrl($user->userDetails->picture) }}" alt="img">
+                                            </div>
+                                        </td>
                                         <td>{{ $user->total_count }}</td>
                                         <td>{{ $user->pending }}</td>
                                         <td>{{ $user->approved }}</td>
@@ -118,6 +124,37 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modaldemo4">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content tx-size-sm">
+                    <div class="modal-body tx-center pd-y-20 pd-x-20">
+                        <button aria-label="Close" class="btn-close float-end text-danger" data-bs-dismiss="modal" type="button"></button>
+                        <br />
+                        <img id="modalImage" src="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection
+
+@push('scripts')
+{{-- <script src="{{ asset('assets/plugins/SmartPhoto-master/smartphoto.js') }}"></script> --}}
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.showImage', function() {
+            $imagePath = $(this).attr('data-id');
+            $('#modalImage').attr('src', $imagePath);
+            $('#modaldemo4').modal('show');
+        })
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     new SmartPhoto(".js-img-viewer", {
+        //         resizeStyle: 'fit',
+        //     });
+        // });
+    })
+</script>
+@endpush
