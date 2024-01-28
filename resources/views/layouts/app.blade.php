@@ -164,6 +164,7 @@
                     success: function(response) {
                         if (response.status) {
                             fetchnotification();
+                            window.location.reload();
                         }
                     }
                 });

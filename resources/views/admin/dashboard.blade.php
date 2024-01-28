@@ -235,11 +235,7 @@
                             </table>
                         </div>
                     </div>
-                    {{-- <div class="card-footer">
-                        <ul class="pagination d-flex justify-content-center">
-                            {{ $allOutpass->render() }}
-                    </ul>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>

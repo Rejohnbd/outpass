@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Outpass;
 use App\Models\User;
 use App\Models\UserDetails;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -293,8 +294,24 @@ class ClientDashboardController extends Controller
     {
         $outpass = Outpass::where('outpass_id', $id)->where('user_id', Auth::user()->id)->where('status', 1)->first();
         if ($outpass) {
-            // dd($outpass);
-            return view('client.download-outpass', compact('outpass'));
+
+            $data = array(
+                'outpass_id'    => $outpass->outpass_id,
+                'name'          => $outpass->user->name,
+                'image_url'     => auth()->user()->userDetails->getAvatar(),
+                'name'          => $outpass->user->name,
+                'phone_no'      => $outpass->user->userDetails->phone_no,
+                'hostel_name'   => $outpass->user->userDetails->hostel->name  . '(' . $outpass->user->userDetails->hostel->short_code . ')',
+                'floor_name'    => $outpass->user->userDetails->hostelFloor->floor_name,
+                'action_by'     => $outpass->actionBy->name,
+                'destination'   => $outpass->destination,
+                'purpose'       => $outpass->purpose,
+                'start_time'    =>  date('H:i, d M Y', strtotime($outpass->start_date_time)),
+                'end_time'      =>  date('H:i, d M Y', strtotime($outpass->end_date_time)),
+                'duration'      =>  $outpass->duration,
+            );
+            $pdf = Pdf::loadView('client.download-outpass', $data);
+            return $pdf->download('outpass_' . $outpass->outpass_id . '.pdf');
         } else {
             toastr()->addSuccess('Something Wrong');
             return redirect()->route('dashboard');
