@@ -160,6 +160,7 @@
                                         <th class="wd-20p">PASS ID</th>
                                         <th class="wd-20p">Student Name</th>
                                         <th class="wd-20p">Student Phn</th>
+                                        <th class="wd-20p">Student Roll</th>
                                         <th class="wd-25p">Pass Type</th>
                                         <th class="wd-25p">Hostel</th>
                                         <th class="wd-25p">Room No</th>
@@ -189,6 +190,7 @@
                                         <td>{{ $item->outpass_id }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->user->userDetails->phone_no }}</td>
+                                        <td>{{ $item->user->userDetails->roll_no }}</td>
                                         <td>
                                             @if($item->outpass_type == 1)
                                             Homepass
