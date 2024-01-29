@@ -116,7 +116,10 @@
                                 <div class="col-md-7 mb-3">
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label tx-semibold">Picture <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="file" id="formFile" name="picture">
+                                        <input class="form-control" type="file" id="formFile" name="picture" required>
+                                        @error('picture')
+                                        <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="text-wrap">

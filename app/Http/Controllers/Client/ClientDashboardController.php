@@ -132,7 +132,7 @@ class ClientDashboardController extends Controller
                 'year'              => 'required|in:1,2,3,4',
                 'room_number'       => 'required',
                 'hostel_floor_id'   => 'required|in:' . $floorIds,
-                // 'picture'           => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'picture'           => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ], [
                 'roll_no.required'           => 'Roll No. is required',
                 'phone_no.required'          => 'Phone No. is required',
