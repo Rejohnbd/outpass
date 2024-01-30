@@ -56,6 +56,10 @@
                 <td>{{ $purpose }}</td>
             </tr>
             <tr>
+                <td><strong>Created At: </strong></td>
+                <td>{{ $created_time }}</td>
+            </tr>
+            <tr>
                 <td><strong>Start Date Time: </strong></td>
                 <td>{{ $start_time }}</td>
             </tr>

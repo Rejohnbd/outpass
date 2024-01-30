@@ -294,7 +294,6 @@ class ClientDashboardController extends Controller
     {
         $outpass = Outpass::where('outpass_id', $id)->where('user_id', Auth::user()->id)->where('status', 1)->first();
         if ($outpass) {
-
             $data = array(
                 'outpass_id'    => $outpass->outpass_id,
                 'name'          => $outpass->user->name,
@@ -306,11 +305,11 @@ class ClientDashboardController extends Controller
                 'action_by'     => $outpass->actionBy->name,
                 'destination'   => $outpass->destination,
                 'purpose'       => $outpass->purpose,
+                'created_time'  =>  date('H:i, d M Y', strtotime($outpass->created_at)),
                 'start_time'    =>  date('H:i, d M Y', strtotime($outpass->start_date_time)),
                 'end_time'      =>  date('H:i, d M Y', strtotime($outpass->end_date_time)),
                 'duration'      =>  $outpass->duration,
             );
-            // return view('client.download-outpass2', $data);
             $pdf = Pdf::loadView('client.download-outpass2', $data);
             return $pdf->download('outpass_' . $outpass->outpass_id . '.pdf');
         } else {
