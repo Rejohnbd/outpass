@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\InchargeController;
 use App\Http\Controllers\Admin\SubadminController;
 use App\Http\Controllers\Client\ClientDashboardController;
 use App\Http\Controllers\Incharge\InchargeDashboardController;
+use App\Http\Controllers\OutpassController;
 use App\Http\Controllers\Subadmin\SubadminDashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,8 +66,13 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::post('update-profile', [ClientDashboardController::class, 'updateProfile'])->name('update-profile');
 });
 
-Route::get('checkoutpass', function () {
-    return view('web.checkoutpass');
-});
+Route::get('checkout', [OutpassController::class, 'checkout'])->name('checkout');
+Route::post('submit-checkout', [OutpassController::class, 'checkoutSubmit'])->name('submit-checkout');
+Route::get('checkin', [OutpassController::class, 'checkin'])->name('checkin');
+Route::post('submit-checkin', [OutpassController::class, 'checkInSubmit'])->name('submit-checkin');
+
+// Route::get('checkoutpass', function () {
+//     return view('web.checkoutpass');
+// });
 
 require __DIR__ . '/auth.php';

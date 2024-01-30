@@ -33,6 +33,7 @@
     <script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/js/themeColors.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    @stack('scripts')
 </body>
 
 </html>

@@ -34,6 +34,8 @@ class CreateOutpassesTable extends Migration
             $table->string('approval_reason')->nullable();
             $table->string('teaching_day')->nullable();
             $table->string('additional_info')->nullable();
+            $table->dateTime('check_out')->nullable();
+            $table->dateTime('check_in')->nullable();
             $table->timestamps();
         });
     }
