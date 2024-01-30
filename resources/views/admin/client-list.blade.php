@@ -63,9 +63,7 @@
                                         <td>{{ $user->userDetails->year }} Year</td>
                                         <td>{{ $user->userDetails->address }}</td>
                                         <td>
-                                            <div class="avatar avatar-xl showImage" style="cursor: pointer; " data-id="{{ $user->userDetails->getAvaterUrl($user->userDetails->picture) }}">
-                                                <img class="rounded-7" src="{{ $user->userDetails->getAvaterUrl($user->userDetails->picture) }}" alt="img">
-                                            </div>
+                                            <button class="btn btn-sm btn-outline-primary  showImage" data-id="{{ $user->userDetails->getAvaterUrl($user->userDetails->picture) }}">Show Image</button>
                                         </td>
                                         <td>{{ $user->total_count }}</td>
                                         <td>{{ $user->pending }}</td>

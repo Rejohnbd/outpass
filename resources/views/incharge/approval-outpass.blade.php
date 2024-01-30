@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="sureStatus" class="tx-semibold">Are you sure? <span class="text-danger">*</span></label>
-                                    <select class="form-select d-block w-100 select2" name="sure_status" id="sureStatus" required>
+                                    <select class="form-select d-block w-100" name="sure_status" id="sureStatus" required>
                                         <option value="">Choose...</option>
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>

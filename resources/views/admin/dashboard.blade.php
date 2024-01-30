@@ -118,7 +118,7 @@
                                 <form action="{{ route('report-admin') }}" method="post">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-sm-12 col-md-5">
+                                        <div class="col-sm-12 col-md-4">
                                             <div class="input-group">
                                                 <div class="input-group-text">
                                                     <i class="fe fe-calendar lh--9 op-6"></i>
@@ -129,7 +129,7 @@
                                             <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-12 col-md-5">
+                                        <div class="col-sm-12 col-md-4">
                                             <div class="input-group">
                                                 <div class="input-group-text">
                                                     <i class="fe fe-calendar lh--9 op-6"></i>
@@ -140,10 +140,9 @@
                                             <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-12 col-md-2">
-                                            <button type="submit" class="btn btn-primary btn-block btn-sm btn-icon-text">
-                                                <i class="fe fe-download-cloud bg-white-transparent text-white"></i>
-                                                <span>Reports</span>
+                                        <div class="col-sm-12 col-md-4">
+                                            <button type="submit" class="btn btn-primary btn-block btn-sm py-2">
+                                                Download Report
                                             </button>
                                         </div>
                                     </div>

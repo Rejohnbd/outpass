@@ -310,7 +310,8 @@ class ClientDashboardController extends Controller
                 'end_time'      =>  date('H:i, d M Y', strtotime($outpass->end_date_time)),
                 'duration'      =>  $outpass->duration,
             );
-            $pdf = Pdf::loadView('client.download-outpass', $data);
+            // return view('client.download-outpass2', $data);
+            $pdf = Pdf::loadView('client.download-outpass2', $data);
             return $pdf->download('outpass_' . $outpass->outpass_id . '.pdf');
         } else {
             toastr()->addSuccess('Something Wrong');

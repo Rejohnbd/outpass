@@ -149,9 +149,8 @@
                                             @enderror
                                         </div>
                                         <div class="col-sm-12 col-md-2">
-                                            <button type="submit" class="btn btn-primary btn-block btn-sm btn-icon-text">
-                                                <i class="fe fe-download-cloud bg-white-transparent text-white"></i>
-                                                <span>Reports</span>
+                                            <button type="submit" class="btn btn-primary btn-block btn-sm py-2">
+                                                Download Report
                                             </button>
                                         </div>
                                     </div>
