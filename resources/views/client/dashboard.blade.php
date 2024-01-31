@@ -168,8 +168,8 @@
                                         <td>{{ date('H:i, d M Y', strtotime($item->start_date_time)) }} </td>
                                         <td>{{ date('H:i, d M Y', strtotime($item->end_date_time)) }}</td>
                                         <td>{{ $item->duration }}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@if(isset($item->check_out)){{ date('H:i, d M Y', strtotime($item->check_out)) }}@endif</td>
+                                        <td>@if(isset($item->check_in)){{ date('H:i, d M Y', strtotime($item->check_in)) }}@endif</td>
                                         <td>
                                             @if($item->status == 1)
                                             <button type="button" class="btn ripple btn-outline-success btn-sm">Approved</button>

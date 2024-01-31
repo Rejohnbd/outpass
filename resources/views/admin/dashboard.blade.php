@@ -216,8 +216,8 @@
                                             @endif
                                         </td>
                                         <td>{{ $item->duration }}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@if(isset($item->check_out)){{ date('H:i, d M Y', strtotime($item->check_out)) }}@endif</td>
+                                        <td>@if(isset($item->check_in)){{ date('H:i, d M Y', strtotime($item->check_in)) }}@endif</td>
                                         <td>{{ $item->purpose }}</td>
                                         <td>@if(isset($item->actionBy)){{ $item->actionBy->name }} @endif</td>
                                         <td>{{ $item->sure_status == 1 ? 'Yes' : 'No' }}</td>
