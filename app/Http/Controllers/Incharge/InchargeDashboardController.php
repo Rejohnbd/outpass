@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Incharge;
 
 use App\Http\Controllers\Controller;
 use App\Models\Outpass;
+use App\Models\User;
+use App\Models\UserDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,5 +83,30 @@ class InchargeDashboardController extends Controller
             'total_notification'    => $notifications->count(),
             'list_notification'     => $listNotification
         ]);
+    }
+
+    public function newClientList()
+    {
+        $userList = User::whereHas('userDetails', function ($query) {
+            $query->where('hostel_id', Auth::user()->incharge->hostel_id);
+            $query->where('hostel_floor_id', Auth::user()->incharge->hostel_floor_id);
+            $query->where('additional_status', '1');
+        })->get();
+
+        return view('incharge.client-list-new', compact('userList'));
+    }
+
+    public function clientApprove(Request $request)
+    {
+        $userDetails = UserDetails::where('user_id', $request->id)->where('hostel_id', auth()->user()->incharge->hostel_id)->where('hostel_floor_id', auth()->user()->incharge->hostel_floor_id)->where('additional_status', 1)->first();
+        if ($userDetails) {
+            $userDetails->additional_status = 2;
+            $userDetails->save();
+            toastr()->addSuccess('Approved Successfully');
+            return redirect()->route('incharge-new-client');
+        } else {
+            toastr()->addError('Something Happend Wrog. Try Again');
+            return redirect()->route('incharge-new-client');
+        }
     }
 }

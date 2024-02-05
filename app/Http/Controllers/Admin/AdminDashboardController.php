@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Hostel;
 use App\Models\Outpass;
 use App\Models\User;
+use App\Models\UserDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exporter;
@@ -93,7 +94,7 @@ class AdminDashboardController extends Controller
     public function clientList()
     {
         $userList = User::whereHas('userDetails', function ($query) {
-            $query->where('additional_status', '1');
+            $query->where('additional_status', '2');
         })->where('user_type', 'client')->withCount([
             'outpass as total_count',
             'outpass as pending' => function ($query) {
@@ -121,6 +122,29 @@ class AdminDashboardController extends Controller
         ])->get();
 
         return view('admin.client-list', compact('userList', 'hostelList'));
+    }
+
+    public function newClientList()
+    {
+        $userList = User::whereHas('userDetails', function ($query) {
+            $query->where('additional_status', '1');
+        })->get();
+
+        return view('admin.client-list-new', compact('userList'));
+    }
+
+    public function clientApprove(Request $request)
+    {
+        $userDetails = UserDetails::where('user_id', $request->id)->where('additional_status', 1)->first();
+        if ($userDetails) {
+            $userDetails->additional_status = 2;
+            $userDetails->save();
+            toastr()->addSuccess('Approved Successfully');
+            return redirect()->route('new-client-list');
+        } else {
+            toastr()->addError('Something Happend Wrog. Try Again');
+            return redirect()->route('new-client-list');
+        }
     }
 
 

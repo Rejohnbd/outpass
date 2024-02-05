@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Subadmin;
 use App\Exports\SubdminClientExport;
 use App\Http\Controllers\Controller;
 use App\Models\Outpass;
+use App\Models\User;
+use App\Models\UserDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -96,5 +98,29 @@ class SubadminDashboardController extends Controller
         ]);
 
         return (new SubdminClientExport($request->from_date, $request->to_date))->download('outpass_report.xlsx');
+    }
+
+    public function newClientList()
+    {
+        $userList = User::whereHas('userDetails', function ($query) {
+            $query->where('hostel_id', Auth::user()->subadmin->hostel_id);
+            $query->where('additional_status', '1');
+        })->get();
+
+        return view('subadmin.client-list-new', compact('userList'));
+    }
+
+    public function clientApprove(Request $request)
+    {
+        $userDetails = UserDetails::where('user_id', $request->id)->where('hostel_id', Auth::user()->subadmin->hostel_id)->where('additional_status', 1)->first();
+        if ($userDetails) {
+            $userDetails->additional_status = 2;
+            $userDetails->save();
+            toastr()->addSuccess('Approved Successfully');
+            return redirect()->route('admin-new-client');
+        } else {
+            toastr()->addError('Something Happend Wrog. Try Again');
+            return redirect()->route('admin-new-client');
+        }
     }
 }

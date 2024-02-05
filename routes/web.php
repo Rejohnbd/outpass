@@ -27,6 +27,8 @@ Route::get('/', function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
     Route::get('client-list', [AdminDashboardController::class, 'clientList'])->name('client-list');
+    Route::get('new-client-list', [AdminDashboardController::class, 'newClientList'])->name('new-client-list');
+    Route::post('admin-client-approve', [AdminDashboardController::class, 'clientApprove'])->name('admin-client-approve');
     Route::get('admin-notification', [AdminDashboardController::class, 'AdminNotification'])->name('admin-notification');
     Route::delete('delete-outpass/{id}', [AdminDashboardController::class, 'deleteOutpass'])->name('delete-outpass');
     Route::post('report-admin', [AdminDashboardController::class, 'reportAdmin'])->name('report-admin');
@@ -37,6 +39,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'subadmin'])->group(function () {
     Route::get('admindashboard', [SubadminDashboardController::class, 'index'])->name('admindashboard');
+    Route::get('admin-new-client', [SubadminDashboardController::class, 'newClientList'])->name('admin-new-client');
+    Route::post('subadmin-client-approve', [SubadminDashboardController::class, 'clientApprove'])->name('subadmin-client-approve');
     Route::get('outpass-approval/{id}', [SubadminDashboardController::class, 'approvalOutpass'])->name('outpass-approval');
     Route::put('outpassapproval/{id}', [SubadminDashboardController::class, 'outpassApproval'])->name('outpassapproval');
     Route::get('subadmin-notification', [SubadminDashboardController::class, 'subadminNotification'])->name('subadmin-notification');
@@ -46,6 +50,8 @@ Route::middleware(['auth', 'subadmin'])->group(function () {
 
 Route::middleware(['auth', 'incharge'])->group(function () {
     Route::get('incharge-dashboard', [InchargeDashboardController::class, 'index'])->name('incharge-dashboard');
+    Route::get('incharge-new-client', [InchargeDashboardController::class, 'newClientList'])->name('incharge-new-client');
+    Route::post('incharge-client-approve', [InchargeDashboardController::class, 'clientApprove'])->name('incharge-client-approve');
     Route::get('approve-outpass/{id}', [InchargeDashboardController::class, 'approvalOutpass'])->name('approve-outpass');
     Route::put('approveoutpass/{id}', [InchargeDashboardController::class, 'outpassApproval'])->name('approveoutpass');
     Route::get('incharge-notification', [InchargeDashboardController::class, 'inchargeNotification'])->name('incharge-notification');
@@ -59,11 +65,11 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::post('request-pass', [ClientDashboardController::class, 'storeOutpass'])->name('request-pass')->middleware('check_addition');
     Route::get('client-notification', [ClientDashboardController::class, 'clientNotification'])->name('client-notification');
     Route::post('client-notification-clear', [ClientDashboardController::class, 'clientNotificationClear'])->name('client-notification-clear');
-    Route::get('download-outpass/{id}', [ClientDashboardController::class, 'downloadOutpass'])->name('download-outpass');
-    Route::get('change-password', [ClientDashboardController::class, 'changePassword'])->name('change-password');
-    Route::post('update-password', [ClientDashboardController::class, 'updatePassword'])->name('update-password');
-    Route::get('edit-profile', [ClientDashboardController::class, 'editProfile'])->name('edit-profile');
-    Route::post('update-profile', [ClientDashboardController::class, 'updateProfile'])->name('update-profile');
+    Route::get('download-outpass/{id}', [ClientDashboardController::class, 'downloadOutpass'])->name('download-outpass')->middleware('check_addition');
+    Route::get('change-password', [ClientDashboardController::class, 'changePassword'])->name('change-password')->middleware('check_addition');
+    Route::post('update-password', [ClientDashboardController::class, 'updatePassword'])->name('update-password')->middleware('check_addition');
+    Route::get('edit-profile', [ClientDashboardController::class, 'editProfile'])->name('edit-profile')->middleware('check_addition');
+    Route::post('update-profile', [ClientDashboardController::class, 'updateProfile'])->name('update-profile')->middleware('check_addition');
 });
 
 Route::get('checkout', [OutpassController::class, 'checkout'])->name('checkout');

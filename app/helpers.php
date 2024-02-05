@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Outpass;
+use App\Models\UserDetails;
 
 if (!function_exists('count_nofications')) {
     function count_nofications()
@@ -53,6 +54,20 @@ if (!function_exists('nofications_list')) {
                 $listNotification .= '<div class="media new reLoad"><div class="media-body"><p><strong>' . $notification->user->name . '</strong> requested <strong>' . $notification->outpass_id . '</strong> outpass is <b class="text-warning">Pending</b> status.</p></div></div>';
             }
             return $listNotification;
+        }
+    }
+}
+
+
+if (!function_exists('count_new_clients')) {
+    function count_new_clients()
+    {
+        if ((auth()->user()->user_type == 'incharge')) {
+            return UserDetails::where('hostel_id', auth()->user()->incharge->hostel_id)->where('hostel_floor_id', auth()->user()->incharge->hostel_floor_id)->where('additional_status', 1)->count();
+        } else if ((auth()->user()->user_type == 'subadmin')) {
+            return UserDetails::where('hostel_id', auth()->user()->subadmin->hostel_id)->where('additional_status', 1)->count();
+        } else {
+            return UserDetails::where('additional_status', 1)->count();
         }
     }
 }

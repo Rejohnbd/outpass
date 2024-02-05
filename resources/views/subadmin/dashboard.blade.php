@@ -126,7 +126,7 @@
                                 <form action="{{ route('report-subadmin') }}" method="post">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-sm-12 col-md-5">
+                                        <div class="col-sm-12 col-md-4">
                                             <div class="input-group">
                                                 <div class="input-group-text">
                                                     <i class="fe fe-calendar lh--9 op-6"></i>
@@ -137,7 +137,7 @@
                                             <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-12 col-md-5">
+                                        <div class="col-sm-12 col-md-4">
                                             <div class="input-group">
                                                 <div class="input-group-text">
                                                     <i class="fe fe-calendar lh--9 op-6"></i>
@@ -148,7 +148,7 @@
                                             <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-12 col-md-2">
+                                        <div class="col-sm-12 col-md-4">
                                             <button type="submit" class="btn btn-primary btn-block btn-sm py-2">
                                                 Download Report
                                             </button>

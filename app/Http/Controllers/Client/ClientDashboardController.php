@@ -19,21 +19,32 @@ class ClientDashboardController extends Controller
 {
     public function index()
     {
-        $data = Outpass::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $user = Auth::user();
+        if ($user->userDetails->additional_status == 2) {
+            $data = Outpass::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
 
-        $lastApprovetOutpass = $data->where('status', 1)->pluck('outpass_id')->first();
-        $lastRejectedOutpass = $data->where('status', 2)->pluck('outpass_id')->first();
-        $lastPendingOutpass = $data->where('status', 0)->pluck('outpass_id')->first();
-        $totalOutpass = $data->count();
-        $totalApprovetOutpass = $data->where('status', 1)->count();
-        $totalRejectedOutpass = $data->where('status', 2)->count();
-        $totalPendingOutpass = $data->where('status', 0)->count();
-        return view('client.dashboard', compact('totalOutpass', 'totalApprovetOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'lastPendingOutpass', 'lastApprovetOutpass', 'lastRejectedOutpass', 'data'));
+            $lastApprovetOutpass = $data->where('status', 1)->pluck('outpass_id')->first();
+            $lastRejectedOutpass = $data->where('status', 2)->pluck('outpass_id')->first();
+            $lastPendingOutpass = $data->where('status', 0)->pluck('outpass_id')->first();
+            $totalOutpass = $data->count();
+            $totalApprovetOutpass = $data->where('status', 1)->count();
+            $totalRejectedOutpass = $data->where('status', 2)->count();
+            $totalPendingOutpass = $data->where('status', 0)->count();
+            return view('client.dashboard', compact('totalOutpass', 'totalApprovetOutpass', 'totalRejectedOutpass', 'totalPendingOutpass', 'lastPendingOutpass', 'lastApprovetOutpass', 'lastRejectedOutpass', 'data'));
+        } else {
+            return view('client.dashboard-wait');
+        }
     }
 
     public function createOutpass()
     {
-        return view('client.create-outpass');
+        $user = Auth::user();
+        if ($user->userDetails->additional_status == 2) {
+            return view('client.create-outpass');
+        } else {
+            toastr()->addWarning('Please Wait for Approval form Authority');
+            return redirect()->route('dashboard');
+        }
     }
 
     public function storeOutpass(Request $request)
