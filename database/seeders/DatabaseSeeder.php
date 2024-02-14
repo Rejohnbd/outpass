@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserTableSeeder::class,
             HostelTableSeeder::class,
-            HostelFloorTableSeeder::class
+            HostelFloorTableSeeder::class,
+            CourseTableSeeder::class
         ]);
         // User::factory(10)->create();
     }

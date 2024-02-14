@@ -65,19 +65,21 @@
                             <div class="mb-3">
                                 <label for="address" class="tx-semibold">Complete Address <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="address" name="address" placeholder="Complete Address" required value="{{ old('address', $userDetails->address) }}">
-                                @error('course')
+                                @error('address')
                                 <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="row">
                                 <div class="col-md-5 mb-3">
                                     <label for="slectCourse" class="tx-semibold">Course <span class="text-danger">*</span></label>
-                                    <select class="form-select d-block w-100 select2" id="slectCourse" name="course" required>
+                                    <select class="form-select d-block w-100 select2" id="slectCourse" name="course_id" required>
                                         <option value="">Choose Course</option>
-                                        <option value="bca" {{ old('course', $userDetails->course) == 'bca' ? 'selected' : ''}}>BCA</option>
-                                        <option value="mca" {{ old('course', $userDetails->course) == 'mca' ? 'selected' : ''}}>MCA</option>
+                                        @foreach($courses as $course)
+                                        <option value="{{ $course->id }}" {{ old('course_id', $userDetails->course_id) == $course->id ? 'selected' : ''}}>{{ $course->name }}</option>
+                                        @endforeach
+
                                     </select>
-                                    @error('course')
+                                    @error('course_id')
                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                     @enderror
                                 </div>

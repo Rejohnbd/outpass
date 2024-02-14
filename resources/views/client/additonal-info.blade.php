@@ -65,19 +65,20 @@
                             <div class="mb-3">
                                 <label for="address" class="tx-semibold">Complete Address <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="address" name="address" placeholder="Complete Address" required value="{{ old('address') }}">
-                                @error('course')
+                                @error('address')
                                 <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="row">
                                 <div class="col-md-5 mb-3">
                                     <label for="slectCourse" class="tx-semibold">Course <span class="text-danger">*</span></label>
-                                    <select class="form-select d-block w-100 select2" id="slectCourse" name="course" required>
+                                    <select class="form-select d-block w-100 select2" id="slectCourse" name="course_id" required>
                                         <option value="">Choose Course</option>
-                                        <option value="bca">BCA</option>
-                                        <option value="mca">MCA</option>
+                                        @foreach($courses as $course)
+                                        <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('course')
+                                    @error('course_id')
                                     <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -103,7 +104,7 @@
                                 </div>
                                 <div class="col-md-5 mb-3">
                                     <label for="floor" class="tx-semibold">Select Floor <span class="text-danger">*</span></label>
-                                    <select class="form-select d-block w-100 select2" id="floor" name="hostel_floor_id" required>
+                                    <select class="form-select d-block w-100" id="floor" name="hostel_floor_id" required>
                                         <option value="">Choose Floor</option>
                                         @foreach($floors as $floor)
                                         <option value="{{ $floor->id }}">{{ $floor->floor_name }}</option>
@@ -136,3 +137,16 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: 'Choose one',
+            searchInputPlaceholder: 'Search',
+            width: '100%'
+        });
+    });
+</script>
+@endpush

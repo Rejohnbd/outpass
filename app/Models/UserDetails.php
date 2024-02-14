@@ -33,4 +33,9 @@ class UserDetails extends Model
     {
         return Storage::disk('s3')->url('uploads/' . $imagePatch);
     }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }

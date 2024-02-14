@@ -56,7 +56,7 @@
                                         <td>{{ $user->userDetails->hostel->name }} ({{$user->userDetails->hostel->short_code}})</td>
                                         <td>{{ $user->userDetails->hostelFloor->floor_name }}</td>
                                         <td>{{ $user->userDetails->room_number }}</td>
-                                        <td>{{ strtoupper($user->userDetails->course) }}</td>
+                                        <td>{{ $user->userDetails->course->name }}</td>
                                         <td>{{ $user->userDetails->year }} Year</td>
                                         <td>{{ $user->userDetails->address }}</td>
                                         <td>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Outpass;
 use App\Models\User;
 use App\Models\UserDetails;
@@ -123,7 +124,8 @@ class ClientDashboardController extends Controller
         if (Auth::user()->userDetails->additional_status  == 0) {
             $hostelShortCode = Auth::user()->userDetails->hostel->short_code;
             $floors = Auth::user()->userDetails->hostel->floors;
-            return view('client.additonal-info', compact('hostelShortCode', 'floors'));
+            $courses = Course::all();
+            return view('client.additonal-info', compact('hostelShortCode', 'floors', 'courses'));
         }
         return redirect()->back();
     }
@@ -139,7 +141,7 @@ class ClientDashboardController extends Controller
                 'guardian_name'     => 'required',
                 'guardian_phone_no' => 'required',
                 'address'           => 'required',
-                'course'            => 'required',
+                'course_id'         => 'required|exists:courses,id',
                 'year'              => 'required|in:1,2,3,4',
                 'room_number'       => 'required',
                 'hostel_floor_id'   => 'required|in:' . $floorIds,
@@ -150,7 +152,8 @@ class ClientDashboardController extends Controller
                 'guardian_name.required'     => 'Guardian Name is required',
                 'guardian_phone_no.required' => 'Guardian Phone No. is required',
                 'address.required'           => 'Address is required',
-                'course.required'            => 'Course is required',
+                'course_id.required'         => 'Course is required',
+                'course_id.eixts'            => 'Provide Valid Course',
                 'year.required'              => 'Year is required',
                 'year.in'                    => 'Provide Valid Year',
                 'room_number.required'       => 'Room No. is required',
@@ -173,7 +176,7 @@ class ClientDashboardController extends Controller
             $userDetails->guardian_name = $request->guardian_name;
             $userDetails->guardian_phone_no = $request->guardian_phone_no;
             $userDetails->address = $request->address;
-            $userDetails->course = $request->course;
+            $userDetails->course_id = $request->course_id;
             $userDetails->year = $request->year;
             $userDetails->room_number = $request->room_number;
             $userDetails->hostel_floor_id = $request->hostel_floor_id;
@@ -254,7 +257,8 @@ class ClientDashboardController extends Controller
         $hostelShortCode = Auth::user()->userDetails->hostel->short_code;
         $floors = Auth::user()->userDetails->hostel->floors;
         $userDetails = Auth::user()->userDetails;
-        return view('client.edit-profile', compact('userDetails', 'hostelShortCode', 'floors'));
+        $courses = Course::all();
+        return view('client.edit-profile', compact('userDetails', 'hostelShortCode', 'floors', 'courses'));
     }
 
     public function updateProfile(Request $request)
@@ -266,7 +270,7 @@ class ClientDashboardController extends Controller
             'guardian_name'     => 'required',
             'guardian_phone_no' => 'required',
             'address'           => 'required',
-            'course'            => 'required',
+            'course_id'         => 'required|exists:courses,id',
             'year'              => 'required|in:1,2,3,4',
             'room_number'       => 'required',
             'hostel_floor_id'   => 'required|in:' . $floorIds,
@@ -277,7 +281,8 @@ class ClientDashboardController extends Controller
             'guardian_name.required'     => 'Guardian Name is required',
             'guardian_phone_no.required' => 'Guardian Phone No. is required',
             'address.required'           => 'Address is required',
-            'course.required'            => 'Course is required',
+            'course_id.required'         => 'Course is required',
+            'course_id.exists'           => 'Provide Valid Course',
             'year.required'              => 'Year is required',
             'year.in'                    => 'Provide Valid Year',
             'room_number.required'       => 'Room No. is required',
@@ -291,7 +296,7 @@ class ClientDashboardController extends Controller
         $userDetails->guardian_name = $request->guardian_name;
         $userDetails->guardian_phone_no = $request->guardian_phone_no;
         $userDetails->address = $request->address;
-        $userDetails->course = $request->course;
+        $userDetails->course_id = $request->course_id;
         $userDetails->year = $request->year;
         $userDetails->room_number = $request->room_number;
         $userDetails->hostel_floor_id = $request->hostel_floor_id;

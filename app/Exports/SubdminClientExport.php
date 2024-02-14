@@ -57,7 +57,7 @@ class SubdminClientExport implements FromCollection, WithHeadings
                     'Hostel Name' => $outpass->user->userDetails->hostel->name . ' (' . $outpass->user->userDetails->hostel->short_code . ')',
                     'Floor' => $outpass->user->userDetails->hostelFloor->floor_name,
                     'Room No' => $outpass->user->userDetails->room_number,
-                    'Course' => strtoupper($outpass->user->userDetails->course),
+                    'Course' => $outpass->user->userDetails->course,
                     'Year' => $outpass->user->userDetails->year . ' Year',
                     'Guardian Name' => $outpass->user->userDetails->guardian_name,
                     'Guardian_ Phone' => $outpass->user->userDetails->guardian_phone_no,
@@ -67,7 +67,9 @@ class SubdminClientExport implements FromCollection, WithHeadings
                     'Start Date Time' => date('H:i, d M Y', strtotime($outpass->start_date_time)),
                     'End Date Time' => date('H:i, d M Y', strtotime($outpass->end_date_time)),
                     'Approve Status' => $outpassStatus,
-                    'Approved By' => isset($outpass->actionBy) ? $outpass->actionBy->name : ''
+                    'Approved By' => isset($outpass->actionBy) ? $outpass->actionBy->name : '',
+                    'Check Out' => !is_null($outpass->check_out) ? date('H:i, d M Y', strtotime($outpass->check_out)) : '',
+                    'Check In' => !is_null($outpass->check_in) ? date('H:i, d M Y', strtotime($outpass->check_out)) : ''
                 ];
             });
     }
@@ -94,7 +96,9 @@ class SubdminClientExport implements FromCollection, WithHeadings
             'Start Date Time',
             'End Date Time',
             'Approve Status',
-            'Approved By'
+            'Approved By',
+            'Check Out',
+            'Check In'
         ];
     }
 }

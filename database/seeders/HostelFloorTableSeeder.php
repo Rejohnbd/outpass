@@ -14,10 +14,10 @@ class HostelFloorTableSeeder extends Seeder
      */
     public function run()
     {
-        HostelFloor::create([
-            'hostel_id'      => 1,
-            'floor_name'     => 'OBH GROUND FLOOR'
-        ]);
+        // HostelFloor::create([
+        //     'hostel_id'      => 1,
+        //     'floor_name'     => 'OBH GROUND FLOOR'
+        // ]);
 
         HostelFloor::create([
             'hostel_id'      => 1,
@@ -34,10 +34,10 @@ class HostelFloorTableSeeder extends Seeder
             'floor_name'     => 'OBH 3rd FLOOR'
         ]);
 
-        HostelFloor::create([
-            'hostel_id'      => 2,
-            'floor_name'     => 'NBH GROUND FLOOR'
-        ]);
+        // HostelFloor::create([
+        //     'hostel_id'      => 2,
+        //     'floor_name'     => 'NBH GROUND FLOOR'
+        // ]);
 
         HostelFloor::create([
             'hostel_id'      => 2,
