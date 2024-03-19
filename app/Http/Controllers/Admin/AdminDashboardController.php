@@ -36,6 +36,7 @@ class AdminDashboardController extends Controller
 
     public function approvalOutpass($id)
     {
+
         $outpass = Outpass::where('outpass_id', $id)->where('status', 0)->first();
         if ($outpass) {
             return view('admin.approval-outpass', compact('outpass'));

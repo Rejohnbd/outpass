@@ -212,7 +212,7 @@
                                             @elseif($item->status == 2)
                                             <button type="button" class="btn ripple btn-outline-danger btn-sm">Rejected</button>
                                             @else
-                                            <button type="button" class="btn ripple btn-outline-warning btn-sm">Pending</button>
+                                            <a href="{{ route('outpassapprove', $item->outpass_id) }}" class="btn ripple btn-outline-warning btn-sm">Pending</a>
                                             @endif
                                         </td>
                                         <td>{{ $item->duration }}</td>

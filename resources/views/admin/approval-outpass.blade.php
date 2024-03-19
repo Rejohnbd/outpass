@@ -28,7 +28,7 @@
                                 Your decision is monitored by Higher Authorities, So approve student request carefully.
                             </div>
                         </div>
-                        <form action="{{ route('approvaloutpass', $outpass->id) }}" method="post">
+                        <form action="{{ route('outpassapprove', $outpass->id) }}" method="post">
                             @csrf
                             @method('PUT')
                             <div class="row">

@@ -30,6 +30,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('new-client-list', [AdminDashboardController::class, 'newClientList'])->name('new-client-list');
     Route::post('admin-client-approve', [AdminDashboardController::class, 'clientApprove'])->name('admin-client-approve');
     Route::get('admin-notification', [AdminDashboardController::class, 'AdminNotification'])->name('admin-notification');
+    Route::get('outpassapprove/{id}', [AdminDashboardController::class, 'approvalOutpass'])->name('outpassapprove');
+    Route::put('outpassapprove/{id}', [AdminDashboardController::class, 'outpassApproval'])->name('outpassapprove');
     Route::delete('delete-outpass/{id}', [AdminDashboardController::class, 'deleteOutpass'])->name('delete-outpass');
     Route::post('report-admin', [AdminDashboardController::class, 'reportAdmin'])->name('report-admin');
     Route::resource('subadmins', SubadminController::class);
