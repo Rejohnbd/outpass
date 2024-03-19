@@ -78,37 +78,120 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="modal fade" id="modaldemo4">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content tx-size-sm">
-                    <div class="modal-body tx-center pd-y-20 pd-x-20">
-                        <button aria-label="Close" class="btn-close float-end text-danger" data-bs-dismiss="modal" type="button"></button>
-                        <br />
-                        <img id="modalImage" src="" />
-                    </div>
+    {{-- <div class="modal fade" id="modaldemo4">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content tx-size-sm">
+                <div class="modal-body tx-center pd-y-20 pd-x-20">
+                    <button aria-label="Close" class="btn-close float-end text-danger" data-bs-dismiss="modal" type="button"></button>
+                    <br />
+                    <img id="modalImage" src="" />
                 </div>
             </div>
         </div>
+    </div> --}}
 
+    <div id="myModal" class="cusmodal">
+        <span class="close">&times;</span>
+        <img class="custmodal-content" id="img01">
     </div>
 </div>
 @endsection
+
+
+@push('styles')
+<style>
+    .cusmodal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .custmodal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+    }
+
+    /* Add Animation */
+    .custmodal-content {
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @keyframes zoom {
+        from {
+            transform: scale(0.1)
+        }
+
+        to {
+            transform: scale(1)
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* 100% Image Width on Smaller Screens */
+    @media only screen and (max-width: 700px) {
+        .custmodal-content {
+            width: 100%;
+        }
+    }
+</style>
+@endpush
 
 @push('scripts')
 {{-- <script src="{{ asset('assets/plugins/SmartPhoto-master/smartphoto.js') }}"></script> --}}
 <script>
     $(document).ready(function() {
+        let modal = document.getElementById('myModal');
+        let modalImg = document.getElementById("img01");
         $(document).on('click', '.showImage', function() {
-            $imagePath = $(this).attr('data-id');
-            $('#modalImage').attr('src', $imagePath);
-            $('#modaldemo4').modal('show');
+            let imagePath = $(this).attr('data-id');
+            // $('#modalImage').attr('src', $imagePath);
+            // $('#modaldemo4').modal('show');
+
+            modal.style.display = "block";
+            modalImg.src = imagePath;
         })
         // document.addEventListener('DOMContentLoaded', function() {
         //     new SmartPhoto(".js-img-viewer", {
         //         resizeStyle: 'fit',
         //     });
         // });
+
+        let span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
     })
 </script>
 @endpush
